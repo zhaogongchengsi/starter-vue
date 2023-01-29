@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => {
       vue(),
       autoImport({
         resolvers: [ArcoResolver()],
+        imports: ['vue', '@vueuse/core'],
       }),
       components({
         resolvers: [
