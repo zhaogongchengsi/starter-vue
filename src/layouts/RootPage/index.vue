@@ -30,6 +30,7 @@ import Header from "@/layouts/Header/index.vue";
 import Menus from "@/layouts/Menus/index.vue";
 import Logo from "@/layouts/Logo/index.vue";
 import Tabs from "@/layouts/Tabs/index.vue";
+import CustomRouterView from '@/components/CustomView/index.vue'
 
 import { useThemeStore } from "@/store";
 
