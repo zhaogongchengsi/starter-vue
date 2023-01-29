@@ -1,0 +1,144 @@
+.dark .icon {
+  color: #fff;
+}
+
+.light .icon {
+  color: #333;
+}
+
+body[arco-theme="dark"] {
+  background-color: var(--color-bg-2);
+  color: var(--color-white);
+
+  // 滚动条
+  --scrollbar-thumb-color: rgba(80, 76, 76, 0.5);
+  --scrollbar-thumb-radius: 4px;
+
+  // 滚动轨道
+  --scrollbar-track-color: transparent;
+  --scrollbar-track-radius: 0;
+
+  --tabs-pane-background: var(--color-fill-2);
+  --tabs-pane-color: #fff;
+
+  --tabs-pane-background-active: rgb(161 161 161 / 41%);
+  --tabs-pane-color-active: #fff;
+
+  --app-main-container-bg-color: rgb(38 39 40);
+}
+
+body {
+  --scrollbar-width: 5px;
+  --scrollbar-height: 5px;
+
+  // 滚动条
+  --scrollbar-thumb-color: rgba(51, 50, 50, 0.5);
+  --scrollbar-thumb-piece-color: transparent;
+  --scrollbar-thumb-radius: 4px;
+
+  // 滚动轨道
+  --scrollbar-track-color: transparent;
+  --scrollbar-track-radius: 0;
+
+  --scrollber-corner-color: transparent;
+
+  // tab 变量设置
+  --tabs-pane-background: var(--color-fill-2);
+  --tabs-pane-color: #333;
+
+  --tabs-pane-background-active: rgb(var(--arcoblue-1));
+  --tabs-pane-color-active: rgb(var(--arcoblue-6));
+
+  // 内容区背景颜色
+  --app-main-container-bg-color: rgb(241 241 241);
+}
+
+@mixin scrollbar {
+  position: relative;
+  // 兼容 火狐
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+  scrollbar-width: thin;
+
+  // 滚动条
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+    border-radius: var(--scrollbar-thumb-radius);
+  }
+
+  // 滚动轨道
+  &::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-track-color);
+    border-radius: var(--scrollbar-track-radius);
+  }
+
+  // 滚动条 以外的地方
+  &::-webkit-scrollbar-track-piece {
+    background-color: var(--scrollbar-thumb-piece-color);
+  }
+
+  // x 和 y 滚动条交接的地方 一般在屏幕右下角
+  &::-webkit-scrollbar-corner {
+    background-color: var(--scrollber-corner-color, transparent);
+  }
+}
+
+.app-scrollbar-hover {
+  scrollbar-gutter: stable;
+  &::-webkit-scrollbar {
+    display: block;
+    width: 0;
+    height: 0;
+    transition: all 2s;
+  }
+
+  &:hover {
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-width) !important;
+      height: var(--scrollbar-height) !important;
+    }
+  }
+
+  @include scrollbar;
+}
+.app-scrollbar-vertical-hover {
+  scrollbar-gutter: stable;
+  &::-webkit-scrollbar {
+    display: block;
+    width: 0;
+    height: 0;
+    transition: all 2s;
+  }
+
+  &:hover {
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-width) !important;
+    }
+  }
+  @include scrollbar;
+}
+
+.app-scrollbar-level-hover {
+  scrollbar-gutter: stable;
+  &::-webkit-scrollbar {
+    display: block;
+    width: 0;
+    height: 0;
+    transition: all 2s;
+  }
+
+  &:hover {
+    &::-webkit-scrollbar {
+      height: var(--scrollbar-height) !important;
+    }
+  }
+  @include scrollbar;
+}
+
+.app-scrollbar {
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-height);
+  }
+
+  @include scrollbar;
+}
