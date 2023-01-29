@@ -8,11 +8,4 @@
 - [scss](https://sass-lang.com/)
 - [pinia](https://pinia.vuejs.org/)
 - [router](https://router.vuejs.org/zh/)
-- [图标](https://tabler-icons.io/)
-
-### 预览
-
-<div style="width: 80%;display: flex;justify-content: space-between;align-items: center; margin: 20px auto;">
-    <img style="width:50%;" src="https://pic.imgdb.cn/item/6392e516b1fccdcd3693fb75.png">
-    <img style="width:50%;" src="https://pic.imgdb.cn/item/6392e516b1fccdcd3693fb80.png">
-</div>
+- [icon](https://tabler-icons.io/)
