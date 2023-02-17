@@ -1,6 +1,7 @@
 <template>
 	<a-layout class="h-screen">
-		<LayuotSider>
+		<LayuotSider :theme="theme.themeMode" :width="theme.themeSetting.asiderWidth"
+			:collapsed="theme.themeSetting.collapsed" collapsible breakpoint="lg" @collapse="onCollapse">
 			<template #sider-logo>
 				<slot name="layout-logo"></slot>
 			</template>
@@ -9,7 +10,7 @@
 			</template>
 		</LayuotSider>
 		<a-layout>
-			<div class="app-header-container">
+			<div class="app-header-container" :style="{ '--app-header-height': theme.themeSetting.headerHeight + 30 }">
 				<LayoutHeader>
 					<template #upper-left-corner>
 						<slot name="header-upper-left-corner"></slot>
@@ -20,7 +21,8 @@
 				</LayoutHeader>
 				<slot name="layout-tabs"></slot>
 			</div>
-			<a-layout class="overflow-auto app-scrollbar app-main-container" :style="{ height: `calc(100vh - 60px)` }">
+			<a-layout class="overflow-auto app-scrollbar app-main-container"
+				:style="{ height: `calc(100vh - ${theme.themeSetting.headerHeight || 60}px)` }">
 				<a-layout-content class="scrollbar">
 					<slot></slot>
 				</a-layout-content>
@@ -31,6 +33,11 @@
 <script setup lang='ts'>
 import LayuotSider from '@/layouts/Sider/index.vue'
 import LayoutHeader from '@/layouts/Header/index.vue'
+import { useThemeStore } from "@/store";
 
+const theme = useThemeStore();
+const onCollapse = (val: boolean) => {
+	theme.themeSetting.collapsed = val;
+};
 </script>
 <style lang='scss'></style>

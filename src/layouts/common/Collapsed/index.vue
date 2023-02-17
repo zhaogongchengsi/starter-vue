@@ -15,5 +15,6 @@ const setting = useThemeStore();
 const setsider = () => {
 	setting.themeSetting.collapsed = !setting.themeSetting.collapsed;
 };
+
 </script>
 <style lang='scss'></style>
