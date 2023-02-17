@@ -21,7 +21,7 @@
 <script lang='ts'>
 import { defineComponent } from 'vue'
 // 布局组件
-import DefaultLayout from "./DefaultLayout.vue"
+import DefaultLayout from "./Default/index.vue"
 // ------------------自定义组件------------------
 import CustomView from "@/components/CustomView/index.vue"
 import Menus from "@/layouts/common/Menus/index.vue";

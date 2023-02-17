@@ -31,8 +31,8 @@
 	</a-layout>
 </template>
 <script setup lang='ts'>
-import LayuotSider from '@/layouts/Sider/index.vue'
-import LayoutHeader from '@/layouts/Header/index.vue'
+import LayuotSider from './Sider/index.vue'
+import LayoutHeader from './Header/index.vue'
 import { useThemeStore } from "@/store";
 
 const theme = useThemeStore();
