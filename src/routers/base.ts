@@ -1,7 +1,7 @@
 import { RouterAsyncRow } from "@/types/user";
 import NotFound from "@/components/NotFound.vue";
 import DefaultPage from "@/views/index.vue";
-import LayoutPage from "@/layouts/Layout/index.vue";
+import LayoutPage from "@/layouts/Index.vue";
 
 export const LOGIN_PAGE = {
   path: "/",

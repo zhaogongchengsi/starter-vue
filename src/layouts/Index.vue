@@ -1,24 +1,28 @@
 <template>
 	<component :is="LayoutName">
+		<template #layout-logo>
+			<Logo />
+		</template>
+		<template #layout-menus>
+			<Menus />
+		</template>
 		<template #header-upper-left-corner>
 			<CollapseButton />
 		</template>
 		<template #header-upper-right-corner>
 			<RightCorner />
 		</template>
-		<template #layout-header>
+		<template #layout-tabs>
 			<Tabs />
-		</template>
-		<template #layout-sider>
-			<Logo />
-			<Menus />
 		</template>
 		<CustomView />
 	</component>
 </template>
 <script lang='ts'>
 import { defineComponent } from 'vue'
+// 布局组件
 import DefaultLayout from "./DefaultLayout.vue"
+// ------------------自定义组件------------------
 import CustomView from "@/components/CustomView/index.vue"
 import Menus from "@/layouts/common/Menus/index.vue";
 import Logo from "@/layouts/common/Logo/index.vue";
@@ -47,6 +51,13 @@ export default defineComponent({
 	}
 })
 
-
 </script>
-<style lang='scss'></style>
+<style lang='scss'>
+.app-main-container {
+	background-color: var(--app-main-container-bg-color);
+}
+
+.app-header-container {
+	height: var(--app-header-height);
+}
+</style>

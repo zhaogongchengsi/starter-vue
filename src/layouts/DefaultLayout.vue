@@ -1,7 +1,12 @@
 <template>
 	<a-layout class="h-screen">
 		<LayuotSider>
-			<slot name="layout-sider"></slot>
+			<template #sider-logo>
+				<slot name="layout-logo"></slot>
+			</template>
+			<template #sider-menus>
+				<slot name="layout-menus"></slot>
+			</template>
 		</LayuotSider>
 		<a-layout>
 			<div class="app-header-container">
@@ -13,7 +18,7 @@
 						<slot name="header-upper-right-corner"></slot>
 					</template>
 				</LayoutHeader>
-				<slot name="layout-header"></slot>
+				<slot name="layout-tabs"></slot>
 			</div>
 			<a-layout class="overflow-auto app-scrollbar app-main-container" :style="{ height: `calc(100vh - 60px)` }">
 				<a-layout-content class="scrollbar">
@@ -24,8 +29,8 @@
 	</a-layout>
 </template>
 <script setup lang='ts'>
-import LayuotSider from '@/layouts/common/Sider/index.vue'
-import LayoutHeader from '@/layouts/common/Header/index.vue'
+import LayuotSider from '@/layouts/Sider/index.vue'
+import LayoutHeader from '@/layouts/Header/index.vue'
 
 </script>
 <style lang='scss'></style>

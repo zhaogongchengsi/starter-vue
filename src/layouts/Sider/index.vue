@@ -1,7 +1,8 @@
 <template>
 	<a-layout-sider :theme="theme.themeMode" :width="theme.themeSetting.asiderWidth"
 		:collapsed="theme.themeSetting.collapsed" collapsible breakpoint="lg" @collapse="onCollapse">
-		<slot></slot>
+		<slot name="sider-logo"></slot>
+		<slot name="sider-menus"></slot>
 	</a-layout-sider>
 </template>
 <script setup lang='ts'>

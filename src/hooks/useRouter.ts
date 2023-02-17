@@ -1,6 +1,6 @@
 import { getRoutersAsync } from "@/api/user";
 import { RouterAsyncRow } from "@/types/user";
-import ComponentNotExit from "@/layouts/ComponNotExist/index.vue";
+import ComponentNotExit from "@/components/ComponNotExist/index.vue";
 
 const modules = import.meta.glob("../views/**/*.vue");
 
