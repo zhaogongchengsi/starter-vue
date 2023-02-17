@@ -54,6 +54,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
+      port: 3530,
       proxy: {
         [`^${proxyprefix}/.*`]: {
           target: proxytraget + proxyprefix,
