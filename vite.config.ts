@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => {
       vue(),
       autoImport({
         resolvers: [ArcoResolver()],
-        imports: ['vue', '@vueuse/core'],
+        imports: ["vue", "@vueuse/core"],
       }),
       components({
         resolvers: [
@@ -34,11 +34,7 @@ export default defineConfig(({ mode }) => {
         ],
       }),
       unocss({
-        presets: [
-          presetAttributify({ dark }),
-          presetUno({ dark }),
-          presetIcons({}),
-        ],
+        presets: [presetAttributify({ dark }), presetUno({ dark }), presetIcons({})],
       }),
       usemock &&
         viteMockServe({

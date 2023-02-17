@@ -5,5 +5,5 @@
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["vite.config.ts", "./plugins/page-generate-router/**/*"]
+  "include": ["vite.config.ts"]
 }
