@@ -1,6 +1,7 @@
 import { RouterAsyncRow } from "@/types/user";
 import NotFound from "@/components/NotFound.vue";
 import DefaultPage from "@/views/index.vue";
+import LayoutPage from "@/layouts/Layout/index.vue";
 
 export const LOGIN_PAGE = {
   path: "/",
@@ -49,7 +50,7 @@ export const DEFAULT_PAGE = {
 export function createDefaultRouter(children?: RouterAsyncRow[]): RouterAsyncRow {
   return {
     path: "/",
-    component: () => import("../layouts/RootPage/index.vue"),
+    component: LayoutPage,
     name: "root",
     redirect: "/home",
     meta: {

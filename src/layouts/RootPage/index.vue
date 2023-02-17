@@ -19,9 +19,9 @@
 </template>
 <script setup lang="ts">
 import Header from "@/layouts/common/Header/index.vue";
+import Tabs from "@/layouts/common/Tabs/index.vue";
 import Menus from "@/layouts/common/Menus/index.vue";
 import Logo from "@/layouts/common/Logo/index.vue";
-import Tabs from "@/layouts/common/Tabs/index.vue";
 import CustomRouterView from '@/components/CustomView/index.vue'
 
 import { useThemeStore } from "@/store";
