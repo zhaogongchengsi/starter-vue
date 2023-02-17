@@ -7,15 +7,15 @@
       <div class="w-180">
         <a-form size="large" :model="form" :layout="language?.value != 'zh-CN' ? 'vertical' : 'horizontal'"
           :label-col-props="{ span: 3 }" :wrapper-col-props="{ span: 21 }" @submit="handleSubmit">
-          <a-form-item field="account" :label="$('account')">
-            <a-input v-model="form.account" placeholder="请输入账号" />
+          <a-form-item field="account" :label="$('loginpage.from.account')">
+            <a-input v-model="form.account" :placeholder="$('loginpage.from.place.account')" />
           </a-form-item>
-          <a-form-item field="password" :label="$('password')">
-            <a-input v-model="form.password" placeholder="请输入密码" />
+          <a-form-item field="password" :label="$('loginpage.from.password')">
+            <a-input v-model="form.password" :placeholder="$('loginpage.from.place.password')" />
           </a-form-item>
-          <a-form-item field="captcha" :label="$('verifi')">
+          <a-form-item field="captcha" :label="$('loginpage.from.verifi')">
             <div class="flex w-full">
-              <a-input class="flex-1" v-model="form.captcha" placeholder="请输入验证码" />
+              <a-input class="flex-1" v-model="form.captcha" :placeholder="$('loginpage.from.place.verifi')" />
               <div class="w-30 flex items-center justify-center cursor-pointer cap-bg" @click="captcha">
                 <a-spin class="h-full" :loading="captchaImg.image === ''">
                   <img class="h-full" :src="captchaImg.image" alt="" />
@@ -27,7 +27,7 @@
             <a-button html-type="submit" type="primary" long :loading="btnLading">
               <div class="flex items-center">
                 <div class="i-tabler-login w-6 h-6"></div>
-                <span class="m-3">{{ $('login') }}</span>
+                <span class="m-3">{{ $('loginpage.from.login') }}</span>
               </div>
             </a-button>
           </a-form-item>

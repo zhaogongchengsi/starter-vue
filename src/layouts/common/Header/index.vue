@@ -1,19 +1,15 @@
 <template>
-  <a-layout-header
-    :style="{ height: setting.themeSetting.headerHeight + 'px' }"
-    :class="['shadow', `header-${setting.themeMode}-bg`]"
-  >
+  <a-layout-header :style="{ height: setting.themeSetting.headerHeight + 'px' }"
+    :class="['shadow', `header-${setting.themeMode}-bg`]">
     <div class="h-full flex justify-between items-center border-box pl-5 pr-10">
       <div class="cursor-pointer" @click="setsider">
-        <div
-          :class="[
-            setting.themeSetting.collapsed
-              ? 'i-tabler-arrows-right'
-              : 'i-tabler-arrows-left',
-            'icon',
-            'w-8 h-8',
-          ]"
-        />
+        <div :class="[
+          setting.themeSetting.collapsed
+            ? 'i-tabler-arrows-right'
+            : 'i-tabler-arrows-left',
+          'icon',
+          'w-8 h-8',
+        ]" />
       </div>
       <div class="right-header">
         <a-space size="large">
@@ -35,8 +31,18 @@
               </a-avatar>
             </div>
             <template #content>
-              <a-doption>Option 1</a-doption>
-              <a-doption @click="outLogin">注销登录</a-doption>
+              <a-doption>
+                <template #icon>
+                  <div class="icon i-tabler-settings w-5 h-5" />
+                </template>
+                {{ $("header.right.setting") }}
+              </a-doption>
+              <a-doption @click="outLogin">
+                <template #icon>
+                  <div class="icon i-tabler-logout w-5 h-5" />
+                </template>
+                {{ $("header.right.logout") }}
+              </a-doption>
             </template>
           </a-dropdown>
         </a-space>
@@ -55,7 +61,7 @@ import { useLocal } from "@/locale/useLocale";
 const setting = useThemeStore();
 const user = useUserStore();
 const router = useRouter();
-const { options, language, setLocal } = useLocal();
+const { options, language, setLocal, $ } = useLocal();
 
 const handleSelect = (v: any) => {
   setLocal(v);
@@ -80,6 +86,7 @@ const setsider = () => {
 .header-light-bg {
   background-color: var(--color-menu-light-bg);
 }
+
 .header-dark-bg {
   background-color: var(--color-menu-dark-bg);
 }
