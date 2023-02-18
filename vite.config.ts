@@ -51,7 +51,7 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": path.resolve("./src"),
         "#": path.resolve("./src/types"),
-        "vue-i18n": "vue-i18n/dist/vue-i18n.runtime.esm-browser.js",
+        "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.prod.js",
       },
     },
     server: {
