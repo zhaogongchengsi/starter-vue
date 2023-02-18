@@ -20,13 +20,13 @@
 					<template #icon>
 						<div class="icon i-tabler-settings w-5 h-5" />
 					</template>
-					{{ $("header.right.setting") }}
+					{{ translate("header.right.setting") }}
 				</a-doption>
 				<a-doption @click="outLogin">
 					<template #icon>
 						<div class="icon i-tabler-logout w-5 h-5" />
 					</template>
-					{{ $("header.right.logout") }}
+					{{ translate("header.right.logout") }}
 				</a-doption>
 			</template>
 		</a-dropdown>
@@ -49,7 +49,7 @@ import { useLocal } from "@/locale/useLocale";
 import { ref } from "vue";
 const user = useUserStore();
 const router = useRouter();
-const { options, language, setLocal, $ } = useLocal();
+const { options, language, setLocal, translate } = useLocal();
 
 const visible = ref(false);
 

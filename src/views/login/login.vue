@@ -1,99 +1,63 @@
 <template>
-  <div class="w-full h-screen relative dark:bg-#232324 flex items-center justify-center login-page">
-    <div class="z-10 h-200 flex items-center text-black border-box p-10 dark:text-white rounded-md login-container-box">
-      <div class="flex items-center justify-center mr-20">
-        <img src="/bg2.png" alt="" />
-      </div>
-      <div class="w-180">
-        <a-form size="large" :model="form" :layout="language?.value != 'zh-CN' ? 'vertical' : 'horizontal'"
-          :label-col-props="{ span: 3 }" :wrapper-col-props="{ span: 21 }" @submit="handleSubmit">
-          <a-form-item field="account" :label="$('loginpage.from.account')">
-            <a-input v-model="form.account" :placeholder="$('loginpage.from.place.account')" />
-          </a-form-item>
-          <a-form-item field="password" :label="$('loginpage.from.password')">
-            <a-input v-model="form.password" :placeholder="$('loginpage.from.place.password')" />
-          </a-form-item>
-          <a-form-item field="captcha" :label="$('loginpage.from.verifi')">
-            <div class="flex w-full">
-              <a-input class="flex-1" v-model="form.captcha" :placeholder="$('loginpage.from.place.verifi')" />
-              <div class="w-30 flex items-center justify-center cursor-pointer cap-bg" @click="captcha">
-                <a-spin class="h-full" :loading="captchaImg.image === ''">
-                  <img class="h-full" :src="captchaImg.image" alt="" />
-                </a-spin>
+  <div class="w-full h-screen relative dark:bg-#232324 flex items-center justify-center">
+    <div class="login-box-bg rounded-md flex" ref="boxref">
+
+      <div class="z-10 h-150 flex items-center text-black border-box p-10 dark:text-white rounded-md login-container-box">
+        <div class="w-150">
+          <a-form size="large" :model="form" layout="vertical" :label-col-props="{ span: 3 }"
+            :wrapper-col-props="{ span: 21 }" @submit="handleSubmit">
+            <a-form-item field="account" :label="translate('loginpage.from.account')">
+              <a-input v-model="form.account" :placeholder="translate('loginpage.from.place.account')" />
+            </a-form-item>
+            <a-form-item field="password" :label="translate('loginpage.from.password')">
+              <a-input v-model="form.password" :placeholder="translate('loginpage.from.place.password')" />
+            </a-form-item>
+            <a-form-item field="captcha" :label="translate('loginpage.from.verifi')">
+              <div class="flex w-full">
+                <a-input class="flex-1" v-model="form.captcha" :placeholder="translate('loginpage.from.place.verifi')" />
+                <div class="w-30 flex items-center justify-center cursor-pointer cap-bg" @click="captcha">
+                  <a-spin class="h-full" :loading="captchaImg.image === ''">
+                    <img class="h-full" :src="captchaImg.image" alt="" />
+                  </a-spin>
+                </div>
               </div>
-            </div>
-          </a-form-item>
-          <a-form-item>
-            <a-button html-type="submit" type="primary" long :loading="btnLading">
-              <div class="flex items-center">
-                <div class="i-tabler-login w-6 h-6"></div>
-                <span class="m-3">{{ $('loginpage.from.login') }}</span>
-              </div>
-            </a-button>
-          </a-form-item>
-        </a-form>
-        <a-row>
-          <a-col :span="3"> </a-col>
-          <a-col :span="21">
-            <a-divider orientation="center"></a-divider>
-            <div class="flex justify-center mt-10">
-              <div class="i-tabler-brand-wechat icon w-10 h-10"></div>
-            </div>
-          </a-col>
-        </a-row>
+            </a-form-item>
+            <a-form-item>
+              <a-button html-type="submit" type="primary" long :loading="btnLading">
+                <div class="flex items-center">
+                  <div class="i-tabler-login w-6 h-6"></div>
+                  <span class="m-3">{{ translate('loginpage.from.login') }}</span>
+                </div>
+              </a-button>
+            </a-form-item>
+          </a-form>
+          <a-divider orientation="center"></a-divider>
+          <div class="flex justify-center mt-10">
+            <div class="i-tabler-brand-wechat icon w-10 h-10"></div>
+          </div>
+        </div>
       </div>
+
     </div>
 
-    <div class="fixed bottom-10 right-10">
-      <a-trigger :trigger="['click']" clickToClose position="top" v-model:popupVisible="popupVisible">
-        <div
-          class="w-15 h-15 shadow-xl bg-gray-50 dark:bg-gray-700 flex items-center justify-center cursor-pointer rounded-full">
-          <div class="icon i-tabler-settings-off w-8 h-8" v-if="popupVisible" />
-          <div class="icon i-tabler-settings w-8 h8" v-else />
-        </div>
-        <template #content>
-          <a-menu :style="{ marginBottom: '-4px' }" mode="popButton" :tooltipProps="{ position: 'left' }"
-            showCollapseButton>
-            <a-menu-item key="theme">
-              <template #icon>
-                <div class="cursor-pointer" @click="setting.setMode()">
-                  <div v-if="setting.themeMode === 'light'" class="i-tabler-moon-stars icon w-6 h-6"></div>
-                  <div v-if="setting.themeMode === 'dark'" class="i-tabler-sun-high icon w-6 h-6"></div>
-                </div>
-              </template>
-              {{ setting.themeMode }}
-            </a-menu-item>
-            <a-sub-menu key="locale">
-              <template #icon>
-                <div class="i-tabler-language icon w-7 h-7" />
-              </template>
-              <template #title> local </template>
-              <a-menu-item v-for="item in options" @click="setLocal(item.value)" :key="item.value">{{
-                item.label
-              }}</a-menu-item>
-            </a-sub-menu>
-          </a-menu>
-        </template>
-      </a-trigger>
-    </div>
+    <LoginSetting />
   </div>
 </template>
 <script setup lang="ts">
+import LoginSetting from "./setting.vue";
 import { getCaptcha } from "@/api/user";
 import { useUserStore } from "@/store";
 import { RouteRecordRaw, useRouter } from "vue-router";
 import { onMounted, reactive, ref } from "vue";
 import { useRouterAsync } from "@/hooks/useRouter";
 import { createDefaultRouter } from "@/routers/base";
-import { useThemeStore } from "@/store";
 import { useLocal } from "@/locale/useLocale";
-const { options, setLocal, $, language } = useLocal();
-
-const setting = useThemeStore();
+import { useEventListener } from "@/hooks/useEventListener";
+const { translate } = useLocal();
 const router = useRouter();
 const userStore = useUserStore();
 const btnLading = ref(false);
-const popupVisible = ref(false);
+const boxref = ref<HTMLDivElement | null>(null);
 
 const captchaImg = reactive({
   id: "",
@@ -149,43 +113,69 @@ const handleSubmit = async (data: any) => {
     router.addRoute(baseRouter as RouteRecordRaw);
   }
 };
+
+
+
+// function getDeg(x: number, y: number, center: [number, number]) {
+//   const [cx, cy] = center;
+//   const dx = x - cx;
+//   const dy = y - cy;
+//   const deg = Math.atan2(dy, dx) * 180 / Math.PI;
+//   return deg;
+// }
+
+// function getAngle(x: number, y: number) {
+//   return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360
+// }
+
+// useEventListener("mousemove", (e: any) => {
+//   const { clientX, clientY } = e;
+//   const { width, height, top, left } = boxref.value!.getBoundingClientRect()
+//   const center: [number, number] = [(width / 2) + left, (height / 2) + top]
+
+// }, 'body')
+
 </script>
 <style lang="scss">
 .fixed-button {
   border-radius: 50%;
 }
 
-.login-mode-card {
-  border-radius: 0% 100% 0% 100% / 1% 0% 100% 99%;
-  width: 60px;
-  height: 60px;
-  background-color: #08aeea;
-  background-image: linear-gradient(0deg, #08aeea 0%, #2af598 100%);
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
+@keyframes rotate {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.login-box-bg {
+  --border-width: 2px;
+  --deg: 45deg;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    display: block;
+    content: "";
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: conic-gradient(transparent, rgb(145, 229, 248), transparent 30%);
+    animation: rotate 4s linear infinite;
+  }
+
+  padding: var(--border-width);
   box-sizing: border-box;
-  padding: 10px;
 }
 
 .login-container-box {
-  background: rgba(255, 255, 255, 0.45);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: var(--color-bg-2);
+  border: 1px solid var(--color-border-4);
 }
 
-body[arco-theme="dark"] .login-container-box {
-  background: rgba(6, 6, 6, 0.45);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
 
+// 右上角旋转不规则椭圆背景
 .login-page {
   position: relative;
   overflow: hidden;

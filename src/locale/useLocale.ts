@@ -25,7 +25,7 @@ export function useLocal() {
     options: LOCALE_OPTIONS,
     setLocal,
     i18n,
-    $: i18n.t,
+    translate: i18n.t,
     language,
   };
 }
