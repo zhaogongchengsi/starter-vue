@@ -113,7 +113,8 @@ export const useHistory = defineStore("routerHistory", () => {
 
     routerHistory.value = newHistory;
 
-    if (currentPath) router.push(currentPath.path);
+    const activePath = unref(currentRoute);
+    activePath && router.push(activePath.path);
   };
 
   watch(router.currentRoute, (newRouter) => {
