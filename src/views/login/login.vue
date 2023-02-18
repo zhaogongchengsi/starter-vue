@@ -128,21 +128,21 @@ const handleSubmit = async (data: any) => {
 //   return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360
 // }
 
-useEventListener("mousemove", (e: any) => {
-  const { clientX, clientY } = e;
-  const { width, height, top, left } = boxref.value!.getBoundingClientRect()
-  // 获取表单的中心
-  const [x, y]: [number, number] = [(width / 2) + left, (height / 2) + top]
+// useEventListener("mousemove", (e: any) => {
+//   const { clientX, clientY } = e;
+//   const { width, height, top, left } = boxref.value!.getBoundingClientRect()
+//   // 获取表单的中心
+//   const [x, y]: [number, number] = [(width / 2) + left, (height / 2) + top]
 
-  // 获取屏幕的中心
-  // const winWidth = document.body.clientWidth || document.documentElement.clientWidth,
-  //   winHeight = document.body.clientHeight || document.documentElement.clientHeight,
-  //   [x, y] = [winWidth / 2, winHeight / 2];
+//   // 获取屏幕的中心
+//   // const winWidth = document.body.clientWidth || document.documentElement.clientWidth,
+//   //   winHeight = document.body.clientHeight || document.documentElement.clientHeight,
+//   //   [x, y] = [winWidth / 2, winHeight / 2];
 
-  console.log(x, y);
+//   console.log(x, y);
 
 
-}, 'body')
+// }, 'body')
 
 </script>
 <style lang="scss">
