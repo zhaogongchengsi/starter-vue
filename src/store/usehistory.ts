@@ -98,15 +98,17 @@ export const useHistory = defineStore("routerHistory", () => {
       return false;
     });
 
-    /**
-     * 判断删除的 记录 在 激活记录的左边还是右边
-     */
     if (deleteIndex! > activeIndex) {
-      // console.log(`删除右边`);
-      setCurrentPointer(deleteIndex! - 1);
+      // 删除的记录在当前激活的记录的右边(后面) 删除后数组长度会减一 激活的记录索引不变
+      // setCurrentPointer(deleteIndex! - 1);
     } else {
-      // console.log(`删除左边`);
-      setCurrentPointer(activeIndex - 1);
+      // 删除的记录在当前激活的记录的左边(前面) 删除后数组长度会减一 激活的记录索引也应该减一 保持激活的记录不变
+      // 当记录还剩两条时 删除第一条 第二条会自动变为激活的路由
+      if (newHistory.length === 1) {
+        setCurrentPointer(0);
+      } else {
+        setCurrentPointer(activeIndex - 1);
+      }
     }
 
     routerHistory.value = newHistory;
