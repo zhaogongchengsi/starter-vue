@@ -1,4 +1,8 @@
-import type { RouteRecordRaw, RawRouteComponent } from "vue-router";
+import type {
+  RawRouteComponent,
+  RouteLocationMatched,
+  RouteRecordRaw,
+} from "vue-router";
 
 export interface LoginInfo {
   account: string;
@@ -39,4 +43,8 @@ interface MenuInfo {
   path: string;
   name?: string;
   children: MenuInfo[];
+}
+
+export interface AppRouteLocationMatched extends RouteLocationMatched {
+  meta: RouterMeTa;
 }
