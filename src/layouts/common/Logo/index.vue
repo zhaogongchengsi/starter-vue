@@ -9,6 +9,10 @@
 </template>
 <script setup lang="ts">
 import { useThemeStore } from "@/store";
+defineOptions({
+	name: 'Logo',
+})
+
 const theme = useThemeStore();
 </script>
 <style lang="scss"></style>

@@ -46,9 +46,7 @@ export default defineComponent({
 			default: 'DefaultLayout'
 		}
 	},
-	setup() {
-
-	}
+	name: "LayoutContianer"
 })
 
 </script>

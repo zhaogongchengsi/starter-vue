@@ -7,6 +7,7 @@ import autoImport from "unplugin-auto-import/vite";
 import components from "unplugin-vue-components/vite";
 import { ArcoResolver } from "unplugin-vue-components/resolvers";
 import { viteMockServe } from "vite-plugin-mock";
+import VueMacros from "unplugin-vue-macros/vite";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -18,7 +19,12 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      Vue(),
+      VueMacros({
+        plugins: {
+          vue: Vue(),
+          // vueJsx: VueJsx(), // if needed
+        },
+      }),
       autoImport({
         resolvers: [ArcoResolver()],
         imports: ["vue", "@vueuse/core"],

@@ -30,6 +30,10 @@ import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
 import { useMouseScroll } from "./useMouseScroll";
 
+defineOptions({
+	name: 'Tabs',
+})
+
 const tabsStore = useHistory();
 const router = useRouter();
 

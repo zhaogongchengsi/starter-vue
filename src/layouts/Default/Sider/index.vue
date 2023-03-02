@@ -7,6 +7,11 @@
 </template>
 <script setup lang='ts'>
 import { useThemeStore } from "@/store";
+
+defineOptions({
+	name: 'DfSider',
+})
+
 const theme = useThemeStore();
 const onCollapse = (val: boolean) => {
 	theme.themeSetting.collapsed = val;

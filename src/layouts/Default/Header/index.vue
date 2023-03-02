@@ -16,6 +16,10 @@
 <script setup lang="ts">
 import { useThemeStore } from "@/store";
 
+defineOptions({
+	name: 'DfHeader',
+})
+
 const setting = useThemeStore();
 
 </script>
