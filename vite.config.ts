@@ -7,6 +7,7 @@ import autoImport from "unplugin-auto-import/vite";
 import components from "unplugin-vue-components/vite";
 import { ArcoResolver } from "unplugin-vue-components/resolvers";
 import { viteMockServe } from "vite-plugin-mock";
+// @ts-ignore
 import VueMacros from "unplugin-vue-macros/vite";
 
 export default defineConfig(({ mode }) => {
