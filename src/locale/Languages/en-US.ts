@@ -12,4 +12,11 @@ export default {
 
   "header.right.logout": "logout",
   "header.right.setting": "setting",
+
+  "router.title.home": "Home",
+  "router.title.dashboard": "Dashboard",
+  "router.title.workbench": "Workbench",
+  "router.title.abnormal": "Abnormal",
+  "router.title.toolLibrary": "Tool Library",
+  "router.title.fileSplitting": "file splitting",
 };

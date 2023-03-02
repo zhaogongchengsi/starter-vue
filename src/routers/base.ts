@@ -16,7 +16,7 @@ export const LOGIN_PAGE = {
     {
       path: "/:pathMatch(.*)*",
       meta: {
-        title: "NotFound",
+        title: "router.title.abnormal",
         auth: false,
         isMenu: false,
       },
@@ -30,7 +30,7 @@ export const NOT_FOUND_PAGE = {
   name: "NotFound",
   component: NotFound,
   meta: {
-    title: "NotFound",
+    title: "router.title.abnormal",
     auth: false,
     isMenu: false,
   },
@@ -41,7 +41,7 @@ export const DEFAULT_PAGE = {
   name: "home",
   component: DefaultPage,
   meta: {
-    title: "首页",
+    title: "router.title.home",
     auth: false,
     isMenu: false,
   },
@@ -54,9 +54,10 @@ export function createDefaultRouter(children?: RouterAsyncRow[]): RouterAsyncRow
     name: "root",
     redirect: "/home",
     meta: {
-      title: "root",
+      title: "router.title.home",
       isMenu: false,
       auth: true,
+      icon: "icon-home"
     },
     children: ([DEFAULT_PAGE] as RouterAsyncRow[]).concat(children || []),
   };

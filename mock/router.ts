@@ -8,7 +8,7 @@ const routers = [
     component: "/views/dashboard",
     name: "dashboard",
     meta: {
-      title: "仪表盘",
+      title: "router.title.dashboard",
       auth: false,
       isMenu: true,
       icon: "icon-dashboard",
@@ -21,7 +21,7 @@ const routers = [
     component: "/views/dashboard/workplace.vue",
     name: "workplace",
     meta: {
-      title: "工作台",
+      title: "router.title.workbench",
       auth: false,
       isMenu: true,
       icon: "icon-common",
@@ -34,7 +34,7 @@ const routers = [
     component: "/views/notComponent",
     name: "notExist",
     meta: {
-      title: "异常组件",
+      title: "router.title.abnormal",
       auth: false,
       isMenu: true,
       icon: "icon-exclamation-polygon-fill",
@@ -47,7 +47,7 @@ const routers = [
     component: "/views/utils",
     name: "utils",
     meta: {
-      title: "工具库",
+      title: "router.title.toolLibrary",
       auth: false,
       isMenu: true,
       icon: "icon-calendar",
@@ -60,7 +60,7 @@ const routers = [
     component: "/views/utils/FileSplit",
     name: "fileSplit",
     meta: {
-      title: "文件切分",
+      title: "router.title.fileSplitting",
       auth: false,
       isMenu: true,
       icon: "icon-file",

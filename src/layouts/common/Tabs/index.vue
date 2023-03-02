@@ -1,22 +1,14 @@
 <template>
-  <div
-    class="tabs-container tabs-container-border"
-    ref="tabRef"
-    :style="{
-      '--tabs-pane-height': poros.height + 'px',
-      '--tabs-py': tabsEmpty ? poros.paddingY + 'px' : '0px',
-      '--tabs-px': tabsEmpty ? poros.paddingX + 'px' : '0px',
-      height: poros.scroll ? height : `auto`,
-    }"
-  >
-    <div
-      v-for="(item, index) of tabsStore.routerHistory"
-      :key="item.name"
-      :class="['tabs-pane', { 'tabs-pane-active': tabsStore.currentPointer === index }]"
-      @click="clickTag(item)"
-    >
+  <div class="tabs-container tabs-container-border" ref="tabRef" :style="{
+    '--tabs-pane-height': poros.height + 'px',
+    '--tabs-py': tabsEmpty ? poros.paddingY + 'px' : '0px',
+    '--tabs-px': tabsEmpty ? poros.paddingX + 'px' : '0px',
+    height: poros.scroll ? height : `auto`,
+  }">
+    <div v-for="(item, index) of tabsStore.routerHistory" :key="item.name"
+      :class="['tabs-pane', { 'tabs-pane-active': tabsStore.currentPointer === index }]" @click="clickTag(item)">
       <span class="tab-laber">
-        {{ item.title }}
+        {{ translate(item.title) }}
       </span>
       <div class="tab-icon" @click.stop="tabsStore.deleteTab(item.name!, item.path)">
         <div class="i-tabler-x icon"></div>
@@ -29,9 +21,11 @@ import { useHistory, HistoryRecord } from "@/store";
 import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
 import { useMouseScroll } from "./useMouseScroll";
+import { useLocal } from "@/locale/useLocale";
+const { translate } = useLocal();
 
 defineOptions({
-	name: 'Tabs',
+  name: 'Tabs',
 })
 
 const tabsStore = useHistory();
@@ -134,6 +128,7 @@ const clickTag = (item: HistoryRecord) => {
     &-active {
       background-color: var(--tabs-pane-background-active);
       color: var(--tabs-pane-color-active);
+
       .tab-icon {
         color: var(--tabs-pane-color-active);
       }

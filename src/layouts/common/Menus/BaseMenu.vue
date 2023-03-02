@@ -5,7 +5,7 @@
         <template #icon v-if="menu.icon">
           <component :is="menu.icon" />
         </template>
-        <template #title>{{ menu.title }}</template>
+        <template #title>{{ translate(menu.title) }}</template>
         <base-menu :menus="menu.children" :parent-path="pathMerge(menu.path)" />
       </a-sub-menu>
     </template>
@@ -14,7 +14,7 @@
         <template #icon v-if="menu.icon">
           <component :is="menu.icon" />
         </template>
-        {{ menu.title }}
+        {{ translate(menu.title) }}
       </a-menu-item>
     </template>
   </template>
@@ -22,6 +22,7 @@
 <script lang="ts">
 import { MenuInfo } from "@/types/user";
 import { defineComponent, computed } from "vue";
+import { useLocal } from "@/locale/useLocale";
 
 export default defineComponent({
   name: "BaseMenu",
@@ -37,7 +38,7 @@ export default defineComponent({
   },
   setup(props) {
     const menuTree = computed(() => props.menus) as unknown as MenuInfo[];
-
+    const { translate } = useLocal();
     const pathMerge = (path: string) => {
       const newPath = [props.parentPath, path].join("/");
       return newPath;
@@ -46,6 +47,7 @@ export default defineComponent({
     return {
       menuTree: menuTree,
       pathMerge,
+      translate
     };
   },
 });
