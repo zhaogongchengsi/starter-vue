@@ -15,6 +15,9 @@
 		<template #layout-tabs>
 			<Tabs />
 		</template>
+		<template #layout-breadcrumb>
+			<Dreadcrumd /> 
+		</template>
 		<CustomView />
 	</component>
 </template>
@@ -29,6 +32,7 @@ import Logo from "@/layouts/common/Logo/index.vue";
 import Tabs from "@/layouts/common/Tabs/index.vue";
 import CollapseButton from '@/layouts/common/Collapsed/index.vue'
 import RightCorner from '@/layouts/common/RightCorner/index.vue'
+import Dreadcrumd from "@/layouts/common/Dreadcrumb/index.vue";
 
 export default defineComponent({
 	components: {
@@ -38,12 +42,13 @@ export default defineComponent({
 		Logo,
 		Tabs,
 		CollapseButton,
-		RightCorner
+		RightCorner,
+		Dreadcrumd
 	},
 	props: {
 		LayoutName: {
 			type: String,
-			default: 'DefaultLayout'
+			default: 'DefaultLayout',
 		}
 	},
 	name: "LayoutContianer"

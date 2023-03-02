@@ -20,6 +20,7 @@
 					</template>
 				</LayoutHeader>
 				<slot name="layout-tabs"></slot>
+				<slot name="layout-breadcrumb"></slot>
 			</div>
 			<a-layout class="overflow-auto app-scrollbar app-main-container"
 				:style="{ height: `calc(100vh - ${theme.themeSetting.headerHeight || 60}px)` }">
