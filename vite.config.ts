@@ -1,8 +1,8 @@
 import { defineConfig, loadEnv } from "vite";
 import path from "path";
-import vue from "@vitejs/plugin-vue";
+import Vue from "@vitejs/plugin-vue";
 import unocss from "unocss/vite";
-import { presetAttributify, presetUno, presetIcons } from "unocss";
+import { presetAttributify, presetIcons, presetUno } from "unocss";
 import autoImport from "unplugin-auto-import/vite";
 import components from "unplugin-vue-components/vite";
 import { ArcoResolver } from "unplugin-vue-components/resolvers";
@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      vue(),
+      Vue(),
       autoImport({
         resolvers: [ArcoResolver()],
         imports: ["vue", "@vueuse/core"],
@@ -31,14 +31,18 @@ export default defineConfig(({ mode }) => {
         ],
       }),
       unocss({
-        presets: [presetAttributify({ dark }), presetUno({ dark }), presetIcons({})],
+        presets: [
+          presetAttributify({ dark }),
+          presetUno({ dark }),
+          presetIcons({}),
+        ],
       }),
       usemock &&
-        viteMockServe({
-          mockPath: "mock", //mock文件路径，在根路径下创建一个mock文件
-          prodEnabled: false, //生产环境下为false，这样就不会被打包到生产包中
-          ignore: /^\_/, //忽略开始_路径
-        }),
+      viteMockServe({
+        mockPath: "mock", //mock文件路径，在根路径下创建一个mock文件
+        prodEnabled: false, //生产环境下为false，这样就不会被打包到生产包中
+        ignore: /^\_/, //忽略开始_路径
+      }),
     ],
     resolve: {
       alias: {
