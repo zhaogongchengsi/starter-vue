@@ -52,7 +52,6 @@ import { onMounted, reactive, ref } from "vue";
 import { useRouterAsync } from "@/hooks/useRouter";
 import { createDefaultRouter } from "@/routers/base";
 import { useLocal } from "@/locale/useLocale";
-import { useEventListener } from "@/hooks/useEventListener";
 const { translate } = useLocal();
 const router = useRouter();
 const userStore = useUserStore();
@@ -73,10 +72,10 @@ const form = reactive({
 
 const captcha = () => {
   captchaImg.image = "";
-  getCaptcha<{ id: string; image: string }>({ width: 100, height: 30 })
+  getCaptcha<{ id: string; url: string }>()
     .then((res) => {
       captchaImg.id = res.id;
-      captchaImg.image = res.image;
+      captchaImg.image = res.url;
     })
     .catch((message) => {
       console.log(message);

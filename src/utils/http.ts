@@ -5,8 +5,11 @@ export const TOKEN_KEY = "anya-token";
 // 新token的名称
 export const NEW_TOKEN_KEY = "new-token";
 
+const OKCODE = 1;
+const Failed = 0;
+
 export interface HttpResponse<T extends any> {
-  stateCode: number;
+  code: number;
   data: T;
   err?: string;
   message?: string;
@@ -28,7 +31,7 @@ http.interceptors.request.use(
   function (error) {
     // 对请求错误做些什么
     return Promise.reject(error);
-  }
+  },
 );
 
 http.interceptors.response.use(
@@ -42,7 +45,7 @@ http.interceptors.response.use(
   },
   function (error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 export function Get<T>(url: string, param?: HttpParams): Promise<T> {
@@ -59,10 +62,10 @@ export function Get<T>(url: string, param?: HttpParams): Promise<T> {
       .get<any, AxiosResponse<HttpResponse<T>, any>, any>(url + paramString)
       .then((res) => {
         const { data } = res;
-        if (data.stateCode === 200) {
+        if (data.code === OKCODE) {
           resolve(data.data);
         } else {
-          reject(data.err);
+          reject(data);
         }
       })
       .catch((err) => {
@@ -77,7 +80,7 @@ export function Post<T>(url: string, data: any): Promise<T> {
       .post<any, AxiosResponse<HttpResponse<T>>>(url, data)
       .then((res) => {
         const { data } = res;
-        if (data.stateCode === 200) {
+        if (data.code === OKCODE) {
           resolve(data.data);
         } else {
           reject(data.message);

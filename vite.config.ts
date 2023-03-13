@@ -59,10 +59,11 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      port: 3530,
+      port: 3050,
       proxy: {
         [`^${proxyprefix}/.*`]: {
           target: proxytraget + proxyprefix,
+          // target: proxytraget,
           changeOrigin: true,
           rewrite: (path: string) => {
             const reg = new RegExp("^\\" + proxyprefix + "/");

@@ -2,7 +2,7 @@ import { LoginInfo, RouterAsyncRow, UserInfo } from "@/types/user";
 import { Get, HttpParams, Post } from "@/utils/http";
 
 export async function getCaptcha<T>(params?: HttpParams) {
-  return await Get<T>(`user/captcha`, params);
+  return await Get<T>(`base/captcha`, params);
 }
 
 export async function Login(userinfo: LoginInfo) {
