@@ -76,7 +76,8 @@ const captcha = async () => {
   captchaImg.image = "";
   const { code, data } = await getCaptcha<{ id: string; url: string }>()
   if (code != State.Ok) {
-    Message.error("获取验证码失败")
+    Message.error("获取验证码失败,请重试")
+    captchaImg.image = '/404.png'
     return
   }
   captchaImg.id = data.id
