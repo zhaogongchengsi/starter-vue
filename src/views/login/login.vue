@@ -6,8 +6,8 @@
         <div class="w-150">
           <a-form size="large" :model="form" layout="vertical" :label-col-props="{ span: 3 }"
             :wrapper-col-props="{ span: 21 }" @submit="handleSubmit">
-            <a-form-item field="account" :label="translate('loginpage.from.account')">
-              <a-input v-model="form.account" :placeholder="translate('loginpage.from.place.account')" />
+            <a-form-item field="phone" :label="translate('loginpage.from.account')">
+              <a-input v-model="form.phone" :placeholder="translate('loginpage.from.place.account')" />
             </a-form-item>
             <a-form-item field="password" :label="translate('loginpage.from.password')">
               <a-input v-model="form.password" :placeholder="translate('loginpage.from.place.password')" />
@@ -16,7 +16,7 @@
               <div class="flex w-full">
                 <a-input class="flex-1" v-model="form.captcha" :placeholder="translate('loginpage.from.place.verifi')" />
                 <div class="w-30 flex items-center justify-center cursor-pointer cap-bg" @click="captcha">
-                  <a-spin class="h-full" :loading="captchaImg.image === ''">
+                  <a-spin class="h-full bg-white" :loading="captchaImg.image === ''">
                     <img class="h-full" :src="captchaImg.image" alt="" />
                   </a-spin>
                 </div>
@@ -52,6 +52,8 @@ import { onMounted, reactive, ref } from "vue";
 import { useRouterAsync } from "@/hooks/useRouter";
 import { createDefaultRouter } from "@/routers/base";
 import { useLocal } from "@/locale/useLocale";
+import { State } from "@/enums/code";
+import { Message } from "@arco-design/web-vue";
 const { translate } = useLocal();
 const router = useRouter();
 const userStore = useUserStore();
@@ -64,22 +66,21 @@ const captchaImg = reactive({
 });
 
 const form = reactive({
-  account: "",
+  phone: "",
   password: "",
   remember: true,
   captcha: "",
 });
 
-const captcha = () => {
+const captcha = async () => {
   captchaImg.image = "";
-  getCaptcha<{ id: string; url: string }>()
-    .then((res) => {
-      captchaImg.id = res.id;
-      captchaImg.image = res.url;
-    })
-    .catch((message) => {
-      console.log(message);
-    });
+  const { code, data } = await getCaptcha<{ id: string; url: string }>()
+  if (code != State.Ok) {
+    Message.error("获取验证码失败")
+    return
+  }
+  captchaImg.id = data.id
+  captchaImg.image = data.url
 };
 
 onMounted(() => {
@@ -97,51 +98,22 @@ const handleSubmit = async (data: any) => {
   const islogin = await userStore.login({
     ...data.values,
     captcha: {
-      text: data.values.captcha,
+      value: data.values.captcha,
       id: captchaImg.id,
     },
   });
 
-  const asyncRouters = await useRouterAsync();
-  const baseRouter = createDefaultRouter(asyncRouters);
+  // const asyncRouters = await useRouterAsync();
+  // const baseRouter = createDefaultRouter(asyncRouters);
 
   btnLading.value = false;
 
   if (islogin) {
     router.push("/");
-    router.addRoute(baseRouter as RouteRecordRaw);
+    // router.addRoute(baseRouter as RouteRecordRaw);
   }
 };
 
-
-
-// function getDeg(x: number, y: number, center: [number, number]) {
-//   const [cx, cy] = center;
-//   const dx = x - cx;
-//   const dy = y - cy;
-//   const deg = Math.atan2(dy, dx) * 180 / Math.PI;
-//   return deg;
-// }
-
-// function getAngle(x: number, y: number) {
-//   return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360
-// }
-
-// useEventListener("mousemove", (e: any) => {
-//   const { clientX, clientY } = e;
-//   const { width, height, top, left } = boxref.value!.getBoundingClientRect()
-//   // 获取表单的中心
-//   const [x, y]: [number, number] = [(width / 2) + left, (height / 2) + top]
-
-//   // 获取屏幕的中心
-//   // const winWidth = document.body.clientWidth || document.documentElement.clientWidth,
-//   //   winHeight = document.body.clientHeight || document.documentElement.clientHeight,
-//   //   [x, y] = [winWidth / 2, winHeight / 2];
-
-//   console.log(x, y);
-
-
-// }, 'body')
 
 </script>
 <style lang="scss">

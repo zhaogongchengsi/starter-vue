@@ -4,6 +4,7 @@ import { LoginInfo, UserInfo } from "@/types/user";
 import { defineStore } from "pinia";
 import md5 from "md5-es";
 import { Message } from "@arco-design/web-vue";
+import { State } from "@/enums/code";
 
 export const USER_INFO_KEY = "anya-userInfo";
 
@@ -19,12 +20,24 @@ export const useUserStore = defineStore("user", {
   },
 
   actions: {
-    async login(userinfo: LoginInfo) {
+    async login(userinfo: LoginInfo): Promise<boolean> {
       try {
-        const { user, token } = await Login({
+        const { code, message, data } = await Login({
           ...userinfo,
           password: md5.hash(userinfo.password),
         });
+
+        if (code === State.Failed) {
+          Message.error(message);
+          return false;
+        }
+
+        if (code != State.Ok) {
+          Message.error(message);
+          return false;
+        }
+        
+        const { user, token } = data;
         window.localStorage.setItem(USER_INFO_KEY, JSON.stringify(user));
         window.localStorage.setItem(TOKEN_KEY, token);
         this.token = token;
@@ -34,7 +47,7 @@ export const useUserStore = defineStore("user", {
         Message.success("登录成功");
         return true;
       } catch (err: any) {
-        Message.error(err);
+        console.error(err);
         return false;
       }
     },

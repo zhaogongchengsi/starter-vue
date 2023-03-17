@@ -5,14 +5,11 @@ export const TOKEN_KEY = "anya-token";
 // 新token的名称
 export const NEW_TOKEN_KEY = "new-token";
 
-const OKCODE = 1;
-const Failed = 0;
-
 export interface HttpResponse<T extends any> {
   code: number;
   data: T;
-  err?: string;
-  message?: string;
+  error: string;
+  message: string;
 }
 
 export type HttpParams = Record<string, string | number>;
@@ -48,7 +45,7 @@ http.interceptors.response.use(
   },
 );
 
-export function Get<T>(url: string, param?: HttpParams): Promise<T> {
+export function Get<T>(url: string, param?: HttpParams): Promise<HttpResponse<T>> {
   let paramString = "";
   if (param) {
     const stringArr = [];
@@ -61,9 +58,9 @@ export function Get<T>(url: string, param?: HttpParams): Promise<T> {
     http
       .get<any, AxiosResponse<HttpResponse<T>, any>, any>(url + paramString)
       .then((res) => {
-        const { data } = res;
-        if (data.code === OKCODE) {
-          resolve(data.data);
+        const { data, status } = res;
+        if (status === 200) {
+          resolve(data);
         } else {
           reject(data);
         }
@@ -74,16 +71,19 @@ export function Get<T>(url: string, param?: HttpParams): Promise<T> {
   });
 }
 
-export function Post<T>(url: string, data: any): Promise<T> {
+export function Post<T, D = any>(
+  url: string,
+  data: D,
+): Promise<HttpResponse<T>> {
   return new Promise((resolve, reject) => {
     http
-      .post<any, AxiosResponse<HttpResponse<T>>>(url, data)
+      .post<HttpResponse<T>>(url, data)
       .then((res) => {
-        const { data } = res;
-        if (data.code === OKCODE) {
-          resolve(data.data);
+        const { data, status } = res;
+        if (status === 200) {
+          resolve(data);
         } else {
-          reject(data.message);
+          reject(data);
         }
       })
       .catch((err) => {
