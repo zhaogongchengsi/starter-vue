@@ -1,17 +1,30 @@
 import { defineStore } from "pinia";
-import { Ref, ref, watch, isRef, computed, unref } from "vue";
+import { computed, isRef, Ref, ref, unref, watch } from "vue";
 import { RouteLocationNormalizedLoaded, useRouter } from "vue-router";
 
-const routerFormat = (router: Ref<RouteLocationNormalizedLoaded> | RouteLocationNormalizedLoaded) => {
-  const { path, meta, name } = isRef<RouteLocationNormalizedLoaded>(router) ? router.value : router;
-  return { path, name: name as string | undefined, title: meta.title as string, icon: meta.icon as string };
+const routerFormat = (
+  router: Ref<RouteLocationNormalizedLoaded> | RouteLocationNormalizedLoaded,
+) => {
+  const { path, meta, name } = isRef<RouteLocationNormalizedLoaded>(router)
+    ? router.value
+    : router;
+  return {
+    path,
+    name: name as string | undefined,
+    title: meta.title as string,
+    icon: meta.icon as string,
+  };
 };
 
 export type HistoryRecord = ReturnType<typeof routerFormat>;
 
+const blacklist = ["login"];
+
 export const useHistory = defineStore("routerHistory", () => {
   const router = useRouter();
-  const routerHistory = ref<HistoryRecord[]>([routerFormat(router.currentRoute)]);
+  const routerHistory = ref<HistoryRecord[]>([
+    routerFormat(router.currentRoute),
+  ]);
   const currentPointer = ref<number>(0);
   const currentRoute = computed(() => {
     const his = routerHistory.value[currentPointer.value];
@@ -24,7 +37,6 @@ export const useHistory = defineStore("routerHistory", () => {
   });
 
   /**
-   *
    * @param name 路由名字
    * @param path 路由路径
    * @desc 在历史记录中查找符合条件的路由
@@ -36,7 +48,6 @@ export const useHistory = defineStore("routerHistory", () => {
   };
 
   /**
-   *
    * @param name 路由名字
    * @param path 路由路径
    * @desc 在历史记录中查找符合条件的路由的索引
@@ -118,6 +129,7 @@ export const useHistory = defineStore("routerHistory", () => {
   };
 
   watch(router.currentRoute, (newRouter) => {
+    if (!newRouter.name || blacklist.includes(String(newRouter.name))) { return }
     pushHistory(newRouter);
   });
 

@@ -2,6 +2,8 @@ import { getRoutersAsync } from "@/api/user";
 import { RouterRecord } from "@/types/user";
 import ComponentNotExit from "@/components/ComponNotExist/index.vue";
 import { State } from "@/enums/code";
+import { EXPRESS_AT_KEY } from "@/store/user";
+import { TOKEN_KEY } from "@/utils/http";
 
 const modules = import.meta.glob("../views/**/*.vue");
 
@@ -56,7 +58,7 @@ export function modulesOrganize(modules: Modules) {
 }
 
 export function routerTravel(routers: RouterRecord[], modules: ModulesMap) {
-  // todo: 格式化路由 的路径参数
+  // todo: 格式化路由 的路径参数 路由排序
 
   const _router = routers.map((r) => {
     const component = searchModuleComponent(r, modules);
@@ -120,6 +122,19 @@ export async function useRouterAsync(): Promise<UseRouterState> {
     data: [],
     message: "",
   };
+
+  const token = localStorage.getItem(TOKEN_KEY);
+  const express_at = localStorage.getItem(EXPRESS_AT_KEY);
+
+  if (
+    !token ||
+    (express_at && new Date(express_at) <= new Date())
+  ) {
+    console.log("没有登录执行登录请求");
+    state.message = "登录过期";
+    return state;
+  }
+
   try {
     const { code, data, message } = await getRoutersAsync();
 

@@ -3,6 +3,7 @@ import path from "path";
 import Vue from "@vitejs/plugin-vue";
 import unocss from "unocss/vite";
 import { presetAttributify, presetIcons, presetUno } from "unocss";
+import presetChinese from "unocss-preset-chinese";
 import autoImport from "unplugin-auto-import/vite";
 import components from "unplugin-vue-components/vite";
 import { ArcoResolver } from "unplugin-vue-components/resolvers";
@@ -42,6 +43,7 @@ export default defineConfig(({ mode }) => {
           presetAttributify({ dark }),
           presetUno({ dark }),
           presetIcons({}),
+          presetChinese()
         ],
       }),
       usemock &&

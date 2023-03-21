@@ -16,6 +16,7 @@
     "axios": "^1.2.0",
     "md5-es": "^1.8.2",
     "pinia": "^2.0.26",
+    "unocss-preset-chinese": "^0.0.6",
     "vue": "^3.2.41",
     "vue-i18n": "^9.2.2",
     "vue-router": "4"
