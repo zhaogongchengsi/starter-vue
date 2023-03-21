@@ -105,23 +105,37 @@ export function routerTravel(routers: RouterRecord[], modules: ModulesMap) {
   return toTree(roorRouter, childRouter);
 }
 
+export type UseRouterState = {
+  isSuccess: boolean;
+  data: RouterRecord[];
+  message?: string;
+};
+
 /**
- * @description 将后端请求过来的扁平化路由数据 转化为真实的路由树形数据 并且将组件替换为真实的组件
+ * @description 将后端请求过来的扁平化路由数据 转化为真实的路由树形数据 并且将组件替换为真实的组件, 实际上是一个普通函数
  */
-export async function useRouterAsync() {
+export async function useRouterAsync(): Promise<UseRouterState> {
+  const state: UseRouterState = {
+    isSuccess: false,
+    data: [],
+    message: "",
+  };
   try {
-    const { code, data, message, error } = await getRoutersAsync();
+    const { code, data, message } = await getRoutersAsync();
 
     if (code === State.Failed) {
-      console.log("获取路由出错了:", message, error);
-      return []
+      state.isSuccess = false;
+      state.message = message;
     }
 
     if (code === State.Ok) {
       const routerRec = routerTravel(data, modulesOrganize(modules));
-      return routerRec
+      state.isSuccess = true;
+      state.message = "成功";
+      state.data = routerRec;
     }
 
+    return state;
   } catch (err) {
     throw err;
   }

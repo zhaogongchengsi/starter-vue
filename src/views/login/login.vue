@@ -104,15 +104,19 @@ const handleSubmit = async (data: any) => {
     },
   });
 
-  console.log(islogin)
-
-  const asyncRouters = await useRouterAsync();
-  
-  const baseRouter = createDefaultRouter(asyncRouters);
-
   btnLading.value = false;
 
   if (islogin) {
+
+    const { isSuccess, message, data } = await useRouterAsync();
+
+    if (!isSuccess) {
+      Message.error(message || "路由获取失败")
+      return
+    }
+
+    const baseRouter = createDefaultRouter(data);
+
     router.addRoute(baseRouter as RouteRecordRaw);
     router.push("/");
   }

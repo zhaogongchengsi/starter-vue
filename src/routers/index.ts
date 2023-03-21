@@ -1,6 +1,5 @@
 import { useRouterAsync } from "@/hooks/useRouter";
 import { useUserStore } from "@/store";
-import { RouterRecord } from "@/types/user";
 import type { App } from "vue";
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
 import { createDefaultRouter, LOGIN_PAGE, NOT_FOUND_PAGE } from "./base";
@@ -8,15 +7,17 @@ import { createDefaultRouter, LOGIN_PAGE, NOT_FOUND_PAGE } from "./base";
 export async function createAppRouters(app: App) {
   let baseRouter: RouteRecordRaw[] = [LOGIN_PAGE];
   try {
-    const asyncRouters = await useRouterAsync();
-    baseRouter = [
-      {
-        ...LOGIN_PAGE,
-        path: "/login",
-      },
-      NOT_FOUND_PAGE,
-      createDefaultRouter(asyncRouters),
-    ];
+    const { isSuccess, data } = await useRouterAsync();
+    if (isSuccess) {
+      baseRouter = [
+        {
+          ...LOGIN_PAGE,
+          path: "/login",
+        },
+        NOT_FOUND_PAGE,
+        createDefaultRouter(data),
+      ];
+    }
   } catch (err) {
     console.error(err);
   }
