@@ -108,7 +108,7 @@ const handleSubmit = async (data: any) => {
 
   if (!islogin) return
 
-  const { isSuccess, message, data:r } = await useRouterAsync();
+  const { isSuccess, message, data: r } = await useRouterAsync();
 
   if (!isSuccess) {
     Message.error(message || "路由获取失败")
@@ -118,6 +118,7 @@ const handleSubmit = async (data: any) => {
   const baseRouter = createDefaultRouter(r);
 
   router.addRoute(baseRouter as RouteRecordRaw);
+
   router.push("/");
 
 };

@@ -7,7 +7,7 @@ import { RouteRecordRaw } from "vue-router";
 export const LOGIN_PAGE = {
   path: "/",
   component: () => import("../views/login/login.vue"),
-  name: "login",
+  name: "root",
   meta: {
     title: "login",
     auth: false,
@@ -48,7 +48,9 @@ export const DEFAULT_PAGE = {
   },
 } as RouteRecordRaw;
 
-export function createDefaultRouter(children: RouterRecord[] = []): RouteRecordRaw {
+export function createDefaultRouter(
+  children: RouterRecord[] = [],
+): RouteRecordRaw {
   return {
     path: "/",
     component: LayoutPage,
@@ -58,8 +60,8 @@ export function createDefaultRouter(children: RouterRecord[] = []): RouteRecordR
       title: "router.title.home",
       isMenu: false,
       auth: true,
-      icon: "icon-home"
+      icon: "icon-home",
     },
-    children: ([DEFAULT_PAGE]).concat(children as unknown as RouteRecordRaw),
-  }
+    children: [DEFAULT_PAGE].concat(children as unknown as RouteRecordRaw),
+  };
 }
