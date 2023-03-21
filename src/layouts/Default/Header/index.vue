@@ -13,12 +13,13 @@
     </a-layout-header>
   </div>
 </template>
+<script lang="ts">
+export default {
+	name: "DfHeader"
+}
+</script>
 <script setup lang="ts">
 import { useThemeStore } from "@/store";
-
-defineOptions({
-	name: 'DfHeader',
-})
 
 const setting = useThemeStore();
 

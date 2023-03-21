@@ -8,16 +8,17 @@
 		</a-breadcrumb>
 	</div>
 </template>
+<script lang="ts">
+export default {
+	name: "Dreadcrumd"
+}
+</script>
 <script setup lang='ts'>
 import { useRoute } from 'vue-router'
 import { AppRouteLocationMatched } from '#/user'
 import { watch, ref } from 'vue'
 import DreaIcon from './DreaIcon.vue'
 import { useLocal } from "@/locale/useLocale";
-
-defineOptions({
-	name: 'Dreadcrumd',
-})
 
 const { translate } = useLocal();
 const router = useRoute()

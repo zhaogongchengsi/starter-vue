@@ -5,12 +5,13 @@
 		<slot name="sider-menus"></slot>
 	</a-layout-sider>
 </template>
+<script lang="ts">
+export default {
+	name: "DfSider"
+}
+</script>
 <script setup lang='ts'>
 import { useThemeStore } from "@/store";
-
-defineOptions({
-	name: 'DfSider',
-})
 
 const theme = useThemeStore();
 const onCollapse = (val: boolean) => {

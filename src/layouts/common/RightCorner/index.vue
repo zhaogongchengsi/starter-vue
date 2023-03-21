@@ -12,7 +12,7 @@
 		<a-dropdown trigger="hover">
 			<div class="w-20 flex justify-center">
 				<a-avatar>
-					<img :src="userInfo?.avatar" alt="avatar" />
+					<img :src="userInfo?.avatarUrl" alt="avatar" />
 				</a-avatar>
 			</div>
 			<template #content>
@@ -44,7 +44,7 @@ import { useThemeStore, useUserStore } from "@/store";
 import { useRouter } from "vue-router";
 import Mode from "@/layouts/Mode.vue";
 import { computed } from "vue";
-import { UserInfo } from "@/types/user";
+import { User } from "@/types/user";
 import { useLocal } from "@/locale/useLocale";
 import { ref } from "vue";
 const user = useUserStore();
@@ -59,7 +59,7 @@ const handleSelect = (v: any) => {
 
 const userInfo = computed(() => {
 	if (user.logined) {
-		return user.user as UserInfo;
+		return user.user as User;
 	}
 });
 

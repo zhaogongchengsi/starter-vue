@@ -16,6 +16,11 @@
     </div>
   </div>
 </template>
+<script lang="ts">
+export default {
+	name: "Tabs"
+}
+</script>
 <script setup lang="ts">
 import { useHistory, HistoryRecord } from "@/store";
 import { useRouter } from "vue-router";
@@ -23,10 +28,6 @@ import { computed, ref } from "vue";
 import { useMouseScroll } from "./useMouseScroll";
 import { useLocal } from "@/locale/useLocale";
 const { translate } = useLocal();
-
-defineOptions({
-  name: 'Tabs',
-})
 
 const tabsStore = useHistory();
 const router = useRouter();

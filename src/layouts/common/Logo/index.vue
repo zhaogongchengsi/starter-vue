@@ -7,12 +7,13 @@
     <h5 class="text-2xl dark:text-white">Anya</h5>
   </div>
 </template>
+<script lang="ts">
+export default {
+	name: "Logo"
+}
+</script>
 <script setup lang="ts">
 import { useThemeStore } from "@/store";
-defineOptions({
-	name: 'Logo',
-})
-
 const theme = useThemeStore();
 </script>
 <style lang="scss"></style>

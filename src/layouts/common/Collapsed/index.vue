@@ -9,12 +9,13 @@
 		]" />
 	</div>
 </template>
+<script lang="ts">
+export default {
+	name: "Collapsed"
+}
+</script>
 <script setup lang='ts'>
 import { useThemeStore } from "@/store";
-defineOptions({
-	name: 'Collapsed',
-})
-
 const setting = useThemeStore();
 const setsider = () => {
 	setting.themeSetting.collapsed = !setting.themeSetting.collapsed;

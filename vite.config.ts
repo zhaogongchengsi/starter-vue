@@ -21,12 +21,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      VueMacros({
-        plugins: {
-          vue: Vue(),
-          // vueJsx: VueJsx(), // if needed
-        },
-      }),
+      Vue(),
       autoImport({
         resolvers: [ArcoResolver()],
         imports: ["vue", "@vueuse/core"],
@@ -43,7 +38,7 @@ export default defineConfig(({ mode }) => {
           presetAttributify({ dark }),
           presetUno({ dark }),
           presetIcons({}),
-          presetChinese()
+          presetChinese(),
         ],
       }),
       usemock &&
