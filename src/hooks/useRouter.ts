@@ -1,6 +1,7 @@
 import { getRoutersAsync } from "@/api/user";
-import { RouterAsyncRow } from "@/types/user";
+import { RouterRecord } from "@/types/user";
 import ComponentNotExit from "@/components/ComponNotExist/index.vue";
+import { State } from "@/enums/code";
 
 const modules = import.meta.glob("../views/**/*.vue");
 
@@ -12,13 +13,19 @@ export type ImportModule = () => Promise<unknown>;
 export type Modules = Record<string, ImportModule>;
 export type ModulesMap = Map<string, ImportModule>;
 
-export function searchModuleComponent(router: RouterAsyncRow, modules: ModulesMap): ImportModule | undefined {
+export function searchModuleComponent(
+  router: RouterRecord,
+  modules: ModulesMap,
+): ImportModule | undefined {
   if (typeof router === "function") {
     return router;
   }
   const component: string = router.component as string;
   const isExt = FILESUF_REG.test(component);
-  const componetName = (isExt ? component : component + ".vue").replace(PATH_REG, "");
+  const componetName = (isExt ? component : component + ".vue").replace(
+    PATH_REG,
+    "",
+  );
   let module = modules.get(componetName);
 
   if (!module) {
@@ -48,10 +55,9 @@ export function modulesOrganize(modules: Modules) {
   return modulesMap;
 }
 
-export function routerTravel(routers: RouterAsyncRow[], modules: ModulesMap) {
-
+export function routerTravel(routers: RouterRecord[], modules: ModulesMap) {
   // todo: 格式化路由 的路径参数
-  
+
   const _router = routers.map((r) => {
     const component = searchModuleComponent(r, modules);
     componentReplace(r, component);
@@ -65,18 +71,21 @@ export function routerTravel(routers: RouterAsyncRow[], modules: ModulesMap) {
     return pid != 0;
   });
 
-  function componentReplace(router: RouterAsyncRow, module?: ImportModule) {
+  function componentReplace(router: RouterRecord, module?: ImportModule) {
     if (!module) {
       // 路由不存在替换为 异常组件
       const comp = router.component;
-      router.props = { componentPath: comp, modules: Array.from(modules.keys()) };
+      router.props = {
+        componentPath: comp,
+        modules: Array.from(modules.keys()),
+      };
       router.component = ComponentNotExit;
     } else {
       router.component = module;
     }
   }
 
-  function toTree(prouter: RouterAsyncRow[], crouter: RouterAsyncRow[]) {
+  function toTree(prouter: RouterRecord[], crouter: RouterRecord[]) {
     prouter.forEach((pitem) => {
       crouter.forEach((citem) => {
         if (pitem.id === citem.pid) {
@@ -97,14 +106,22 @@ export function routerTravel(routers: RouterAsyncRow[], modules: ModulesMap) {
 }
 
 /**
- *
  * @description 将后端请求过来的扁平化路由数据 转化为真实的路由树形数据 并且将组件替换为真实的组件
  */
 export async function useRouterAsync() {
   try {
-    const router = await getRoutersAsync();
-    const routerRec = routerTravel(router, modulesOrganize(modules));
-    return routerRec;
+    const { code, data, message, error } = await getRoutersAsync();
+
+    if (code === State.Failed) {
+      console.log("获取路由出错了:", message, error);
+      return []
+    }
+
+    if (code === State.Ok) {
+      const routerRec = routerTravel(data, modulesOrganize(modules));
+      return routerRec
+    }
+
   } catch (err) {
     throw err;
   }

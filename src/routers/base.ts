@@ -1,7 +1,8 @@
-import { RouterAsyncRow } from "@/types/user";
+import { RouterRecord } from "@/types/user";
 import NotFound from "@/components/NotFound.vue";
 import DefaultPage from "@/views/index.vue";
 import LayoutPage from "@/layouts/Index.vue";
+import { RouteRecordRaw } from "vue-router";
 
 export const LOGIN_PAGE = {
   path: "/",
@@ -23,7 +24,7 @@ export const LOGIN_PAGE = {
       component: NotFound,
     },
   ],
-};
+} as RouteRecordRaw;
 
 export const NOT_FOUND_PAGE = {
   path: "/:pathMatch(.*)*",
@@ -45,9 +46,9 @@ export const DEFAULT_PAGE = {
     auth: false,
     isMenu: false,
   },
-};
+} as RouteRecordRaw;
 
-export function createDefaultRouter(children?: RouterAsyncRow[]): RouterAsyncRow {
+export function createDefaultRouter(children: RouterRecord[] = []): RouteRecordRaw {
   return {
     path: "/",
     component: LayoutPage,
@@ -59,6 +60,6 @@ export function createDefaultRouter(children?: RouterAsyncRow[]): RouterAsyncRow
       auth: true,
       icon: "icon-home"
     },
-    children: ([DEFAULT_PAGE] as RouterAsyncRow[]).concat(children || []),
-  };
+    children: ([DEFAULT_PAGE]).concat(children as unknown as RouteRecordRaw),
+  }
 }

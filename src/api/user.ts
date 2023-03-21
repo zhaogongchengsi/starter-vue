@@ -1,4 +1,4 @@
-import { LoginInfo, RouterAsyncRow, UserInfo } from "@/types/user";
+import { Authorization, LoginInfo, RouterRecord, User } from "@/types/user";
 import { Get, HttpParams, Post } from "@/utils/http";
 
 export async function getCaptcha<T>(params?: HttpParams) {
@@ -6,9 +6,9 @@ export async function getCaptcha<T>(params?: HttpParams) {
 }
 
 export async function Login(userinfo: LoginInfo) {
-  return await Post<{ user: UserInfo; token: string }>(`user/login`, userinfo);
+  return await Post<{ user: User; authorization: Authorization }>(`user/login`, userinfo);
 }
 
 export async function getRoutersAsync() {
-  return await Get<RouterAsyncRow[]>("router/routers");
+  return await Get<RouterRecord[]>("user/routers");
 }

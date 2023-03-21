@@ -1,3 +1,4 @@
+import { Component } from "vue";
 import type {
   RawRouteComponent,
   RouteLocationMatched,
@@ -14,28 +15,52 @@ export interface LoginInfo {
   };
 }
 
-export interface UserInfo {
-  avatar: string;
-  account: string;
-  nickName: string;
-  language: "zn" | "cn";
-  rule: "admin" | "user";
+export interface User {
+  avatarUrl: string;
+  createAt: string;
+  email: string;
+  enable: number;
+  id: number;
+  mode: string;
+  nickname: string;
+  phone: string;
+  updateAt: string;
+  username: string;
+  uuid: string;
+}
+
+type DataString = string;
+export interface Authorization {
+  issued_at: DataString;
+  express_at: DataString;
+  token: string;
 }
 
 export interface RouterMeTa {
-  title: string;
+  auth: boolean;
+  icon: string;
   isMenu: boolean;
-  icon?: string;
-  auth?: boolean;
+  keepAlive: boolean;
+  title: string;
 }
 
-export type RouterAsyncRow = {
-  pid?: number;
-  id?: number;
-  meta: RouterMeTa;
-  children?: RouterAsyncRow[];
+type _Props = boolean | Record<string, any> | ((to: RouteLocationNormalized) => Record<string, any>)
+
+export type RouterRecord = {
   component: string | RawRouteComponent;
-} & RouteRecordRaw;
+  createAt: string;
+  hidden: boolean;
+  id: number;
+  meta: Meta;
+  name: string;
+  props?: _Props;
+  path: string;
+  pid: number;
+  sort: number;
+  redirect: string;
+  updateAt: string;
+  children?: RouterRecord[];
+};
 
 interface MenuInfo {
   icon?: string;

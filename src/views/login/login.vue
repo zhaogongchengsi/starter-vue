@@ -66,8 +66,8 @@ const captchaImg = reactive({
 });
 
 const form = reactive({
-  phone: "",
-  password: "",
+  phone: "12312312312",
+  password: "123456",
   remember: true,
   captcha: "",
 });
@@ -104,14 +104,17 @@ const handleSubmit = async (data: any) => {
     },
   });
 
-  // const asyncRouters = await useRouterAsync();
-  // const baseRouter = createDefaultRouter(asyncRouters);
+  console.log(islogin)
+
+  const asyncRouters = await useRouterAsync();
+  
+  const baseRouter = createDefaultRouter(asyncRouters);
 
   btnLading.value = false;
 
   if (islogin) {
+    router.addRoute(baseRouter as RouteRecordRaw);
     router.push("/");
-    // router.addRoute(baseRouter as RouteRecordRaw);
   }
 };
 
