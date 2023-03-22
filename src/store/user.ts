@@ -27,7 +27,7 @@ function useLogin() {
     try {
       const { code, message, data } = await Login({
         ...userinfo,
-        password: userinfo.password,
+        password: md5.hash(userinfo.password),
       });
 
       if (code === State.Failed) {
