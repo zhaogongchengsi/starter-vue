@@ -24,10 +24,7 @@ export function searchModuleComponent(
   }
   const component: string = router.component as string;
   const isExt = FILESUF_REG.test(component);
-  const componetName = (isExt ? component : component + ".vue").replace(
-    PATH_REG,
-    "",
-  );
+  const componetName = (isExt ? component : component + ".vue").replace(PATH_REG,"");
   let module = modules.get(componetName);
 
   if (!module) {

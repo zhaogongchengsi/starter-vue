@@ -10,5 +10,5 @@ export async function Login(userinfo: LoginInfo) {
 }
 
 export async function getRoutersAsync() {
-  return await Get<RouterRecord[]>("user/routers");
+  return await Get<RouterRecord[]>("user/getrouters");
 }
