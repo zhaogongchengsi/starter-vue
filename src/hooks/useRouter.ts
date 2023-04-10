@@ -86,7 +86,12 @@ export function routerTravel(routers: RouterRecord[], modules: ModulesMap) {
 
   function toTree(prouter: RouterRecord[], crouter: RouterRecord[]) {
     prouter.forEach((pitem) => {
+      // 将 自身id 记录在meta 里面 后续判断权限有用
+      pitem.meta["pid"] = 0
+      pitem.meta["id"] = pitem.id
       crouter.forEach((citem) => {
+        citem.meta["id"] = citem.id
+        citem.meta["pid"] = pitem.id
         if (pitem.id === citem.pid) {
           toTree([citem], crouter);
           if (pitem.children) {

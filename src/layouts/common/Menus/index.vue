@@ -1,12 +1,6 @@
 <template>
-  <a-menu
-    @menu-item-click="menuItmeClick"
-    @sub-menu-click="subMenuClick"
-    :collapse="setting.themeSetting.collapsed"
-    :theme="setting.themeMode"
-    :selectedKeys="selectedKeys"
-    accordion
-  >
+  <a-menu @menu-item-click="menuItmeClick" @sub-menu-click="subMenuClick" :collapse="setting.themeSetting.collapsed"
+    :theme="setting.themeMode" :selectedKeys="selectedKeys" accordion>
     <base-menu :menus="menus"></base-menu>
   </a-menu>
 </template>
@@ -14,7 +8,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref, watch } from "vue";
 import { IconCalendar } from "@arco-design/web-vue/es/icon";
-import { RouteRecordRaw, useRouter } from "vue-router";
+import { RouteRecordNormalized, RouteRecordRaw, useRouter } from "vue-router";
 import { MenuInfo, RouterMeTa } from "@/types/user";
 import BaseMenu from "./BaseMenu.vue";
 import { useThemeStore } from "@/store";
@@ -28,13 +22,14 @@ export default defineComponent({
 
     const selectedKeys = ref<string[]>([]);
 
+    // 路由变化 切换高亮
     watch(router.currentRoute, (newRouter) => {
       selectedKeys.value = [newRouter.path];
     });
 
     const menuTree = (routers: readonly RouteRecordRaw[]): MenuInfo[] => {
       const cloneRouters = routers?.map((router): MenuInfo | null => {
-        const { path, name, meta, children } = router;
+        const { path, name, meta, children } = router;        
         if (!meta?.isMenu) {
           return null;
         }
@@ -51,22 +46,26 @@ export default defineComponent({
       return cloneRouters?.filter(Boolean) as MenuInfo[];
     };
 
-    const getRoutes = computed(() => {
-      const rootRouters = router.options.routes.find((item) => {
-        return item.path === "/";
-      });
-      if (!rootRouters) {
-        return [];
-      }
-      return rootRouters.children;
-    });
+    function filterSubRoute(rs: RouteRecordNormalized[]) {
+      return rs.map(r => {
+        const paths = r.path.split("/").filter(Boolean)
+        if (paths.length <= 1) {
+          return r
+        }
+        // 若 路由 为 a/b 直接的路径 则判断 pid 是否为 0 不为0 则代表有父菜单 则代表为 子菜单 
+        if (r.meta.pid === 0) {
+          return r
+        }
+      }).filter(Boolean)
+    }
 
     const menus = computed(() => {
-      return menuTree(getRoutes.value!);
+      const r = router.getRoutes()
+      return menuTree(filterSubRoute(r) as readonly RouteRecordRaw[]);
     });
 
     const menuItmeClick = (key: string) => {
-      router.push(key);
+      router.push(key)
     };
 
     const subMenuClick = (key: string) => {

@@ -40,10 +40,9 @@ export default defineComponent({
     const menuTree = computed(() => props.menus) as unknown as MenuInfo[];
     const { translate } = useLocal();
     const pathMerge = (path: string) => {
-      const newPath = [props.parentPath, path].join("/");
+      const newPath = [props.parentPath, path].filter(Boolean).join("/");      
       return newPath;
     };
-
     return {
       menuTree: menuTree,
       pathMerge,
