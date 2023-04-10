@@ -29,7 +29,7 @@ export default defineComponent({
 
     const menuTree = (routers: readonly RouteRecordRaw[]): MenuInfo[] => {
       const cloneRouters = routers?.map((router): MenuInfo | null => {
-        const { path, name, meta, children } = router;        
+        const { path, name, meta, children } = router;
         if (!meta?.isMenu) {
           return null;
         }
@@ -47,16 +47,23 @@ export default defineComponent({
     };
 
     function filterSubRoute(rs: RouteRecordNormalized[]) {
-      return rs.map(r => {
-        const paths = r.path.split("/").filter(Boolean)
-        if (paths.length <= 1) {
-          return r
-        }
-        // 若 路由 为 a/b 直接的路径 则判断 pid 是否为 0 不为0 则代表有父菜单 则代表为 子菜单 
-        if (r.meta.pid === 0) {
-          return r
-        }
-      }).filter(Boolean)
+      return rs
+        .map(r => {
+          const paths = r.path.split("/").filter(Boolean)
+          if (paths.length <= 1) {
+            return r
+          }
+          // 若 路由 为 a/b 直接的路径 则判断 pid 是否为 0 不为0 则代表有父菜单 则代表为 子菜单 
+          if (r.meta.pid === 0) {
+            return r
+          }
+        }).filter(Boolean)
+        .sort((a, b) => {
+          // 排序
+          const { sort: s1 } = a?.meta || { sort: 2 }
+          const { sort: s2 } = b?.meta || { sort: 1 }
+          return Number(s1) - Number(s2)
+        })
     }
 
     const menus = computed(() => {

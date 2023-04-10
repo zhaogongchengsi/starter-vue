@@ -4,7 +4,6 @@ import ComponentNotExit from "@/components/ComponNotExist/index.vue";
 import { State } from "@/enums/code";
 import { EXPRESS_AT_KEY } from "@/store/user";
 import { TOKEN_KEY } from "@/utils/http";
-
 const modules = import.meta.glob("../views/**/*.vue");
 
 // 匹配路径前缀 ./ ../ ..\ .\
@@ -24,7 +23,10 @@ export function searchModuleComponent(
   }
   const component: string = router.component as string;
   const isExt = FILESUF_REG.test(component);
-  const componetName = (isExt ? component : component + ".vue").replace(PATH_REG,"");
+  const componetName = (isExt ? component : component + ".vue").replace(
+    PATH_REG,
+    "",
+  );
   let module = modules.get(componetName);
 
   if (!module) {
@@ -87,11 +89,17 @@ export function routerTravel(routers: RouterRecord[], modules: ModulesMap) {
   function toTree(prouter: RouterRecord[], crouter: RouterRecord[]) {
     prouter.forEach((pitem) => {
       // 将 自身id 记录在meta 里面 后续判断权限有用
-      pitem.meta["pid"] = 0
-      pitem.meta["id"] = pitem.id
+      pitem.meta["pid"] = 0;
+      pitem.meta["id"] = pitem.id;
+      pitem.meta["sort"] = pitem.sort;
+   
+
       crouter.forEach((citem) => {
-        citem.meta["id"] = citem.id
-        citem.meta["pid"] = pitem.id
+        citem.meta["id"] = citem.id;
+        citem.meta["pid"] = pitem.id;
+        citem.meta["sort"] = citem.sort;
+  
+
         if (pitem.id === citem.pid) {
           toTree([citem], crouter);
           if (pitem.children) {
@@ -132,7 +140,7 @@ export async function useRouterAsync(): Promise<UseRouterState> {
     !token ||
     (express_at && new Date(express_at) <= new Date())
   ) {
-    console.log("没有登录执行登录请求");
+    // console.log("没有登录执行登录请求");
     state.message = "登录过期";
     return state;
   }
