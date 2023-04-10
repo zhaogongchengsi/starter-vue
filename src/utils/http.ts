@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
+import { TOKEN_KEY } from "./keys";
 
-// token 的名称
-export const TOKEN_KEY = "anya-token";
 // 新token的名称
 export const NEW_TOKEN_KEY = "new-token";
 

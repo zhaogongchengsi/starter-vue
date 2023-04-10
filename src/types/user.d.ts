@@ -27,6 +27,16 @@ export interface User {
   updateAt: string;
   username: string;
   uuid: string;
+  authorities: Authority[]
+}
+
+export interface Authority {
+  authorityName: string;
+  createAt: string;
+  id: number;
+  pid: number;
+  routerRecords: null;
+  updateAt: string;
 }
 
 type DataString = string;

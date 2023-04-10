@@ -2,8 +2,7 @@ import { getRoutersAsync } from "@/api/user";
 import { RouterRecord } from "@/types/user";
 import ComponentNotExit from "@/components/ComponNotExist/index.vue";
 import { State } from "@/enums/code";
-import { EXPRESS_AT_KEY } from "@/store/user";
-import { TOKEN_KEY } from "@/utils/http";
+import { tokenValid } from "@/utils/token";
 const modules = import.meta.glob("../views/**/*.vue");
 
 // 匹配路径前缀 ./ ../ ..\ .\
@@ -89,17 +88,9 @@ export function routerTravel(routers: RouterRecord[], modules: ModulesMap) {
   function toTree(prouter: RouterRecord[], crouter: RouterRecord[]) {
     prouter.forEach((pitem) => {
       // 将 自身id 记录在meta 里面 后续判断权限有用
-      pitem.meta["pid"] = 0;
-      pitem.meta["id"] = pitem.id;
-      pitem.meta["sort"] = pitem.sort;
-   
-
+      Object.assign(pitem.meta, { pid: 0, id: pitem.id, sort: pitem.sort });
       crouter.forEach((citem) => {
-        citem.meta["id"] = citem.id;
-        citem.meta["pid"] = pitem.id;
-        citem.meta["sort"] = citem.sort;
-  
-
+        Object.assign(citem.meta, { pid: citem.pid, id: citem.id, sort: citem.sort });
         if (pitem.id === citem.pid) {
           toTree([citem], crouter);
           if (pitem.children) {
@@ -133,13 +124,7 @@ export async function useRouterAsync(): Promise<UseRouterState> {
     message: "",
   };
 
-  const token = localStorage.getItem(TOKEN_KEY);
-  const express_at = localStorage.getItem(EXPRESS_AT_KEY);
-
-  if (
-    !token ||
-    (express_at && new Date(express_at) <= new Date())
-  ) {
+  if (!tokenValid()) {
     // console.log("没有登录执行登录请求");
     state.message = "登录过期";
     return state;

@@ -1,5 +1,4 @@
 import { useRouterAsync } from "@/hooks/useRouter";
-import { useUserStore } from "@/store";
 import type { App } from "vue";
 import {
   createRouter,
@@ -7,6 +6,7 @@ import {
   type RouteRecordRaw,
 } from "vue-router";
 import { createDefaultRouter, LOGIN_PAGE, NOT_FOUND_PAGE } from "./base";
+import { tokenValid } from "@/utils/token";
 
 export async function createAppRouters(app: App) {
   let baseRouter: RouteRecordRaw[] = [LOGIN_PAGE];
@@ -38,6 +38,7 @@ export async function createAppRouters(app: App) {
   });
 
   router.beforeEach((to, from) => {
+
     if (
       (to?.meta.auth != undefined && to?.meta.auth == false) ||
       to.name === "login"
@@ -45,9 +46,9 @@ export async function createAppRouters(app: App) {
       return true;
     }
 
-    const user = useUserStore();
+    // 会验证token 是否有效
 
-    if (!user.logined && !user.token) {
+    if (!tokenValid()) {
       return { path: "/login" };
     }
 
