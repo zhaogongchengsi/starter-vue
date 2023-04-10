@@ -5,7 +5,7 @@ function IsInvalidString(str: string | undefined | null): boolean {
   if (!Boolean(str) || typeof str != "string") {
     return false;
   }
-  if (str.replace(/\s/, "").length < 1) {
+  if (str.replace(/\s/gm, "").length < 1) {
     return false;
   }
   return true;
