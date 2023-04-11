@@ -1,0 +1,27 @@
+
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Setup SSH connection
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+      
+      - name: Push code to remote server
+        run: |
+          ssh-command "cd /path/to/remote/repository && git pull origin main"

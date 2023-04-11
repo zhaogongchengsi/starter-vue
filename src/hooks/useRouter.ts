@@ -56,24 +56,9 @@ export function modulesOrganize(modules: Modules) {
 }
 
 export function routerTravel(routers: RouterRecord[], modules: ModulesMap) {
-  // todo: 格式化路由 的路径参数 路由排序
-
-  const _router = routers.map((r) => {
-    const component = searchModuleComponent(r, modules);
-    componentReplace(r, component);
-    return r;
-  });
-
-  const roorRouter = _router.filter(({ pid }) => {
-    return pid === 0;
-  });
-  const childRouter = _router.filter(({ pid }) => {
-    return pid != 0;
-  });
-
+ 
   function componentReplace(router: RouterRecord, module?: ImportModule) {
     if (!module) {
-      // 路由不存在替换为 异常组件
       const comp = router.component;
       router.props = {
         componentPath: comp,
@@ -85,27 +70,38 @@ export function routerTravel(routers: RouterRecord[], modules: ModulesMap) {
     }
   }
 
-  function toTree(prouter: RouterRecord[], crouter: RouterRecord[]) {
-    prouter.forEach((pitem) => {
-      // 将 自身id 记录在meta 里面 后续判断权限有用
-      Object.assign(pitem.meta, { pid: 0, id: pitem.id, sort: pitem.sort });
-      crouter.forEach((citem) => {
-        Object.assign(citem.meta, { pid: citem.pid, id: citem.id, sort: citem.sort });
-        if (pitem.id === citem.pid) {
-          toTree([citem], crouter);
-          if (pitem.children) {
-            pitem.children.push(citem);
-          } else {
-            pitem.children = [citem];
-          }
-        }
+  function buildTree(data: RouterRecord[]): RouterRecord[] {
+    const map: { [key: number]: number } = {};
+    let node: RouterRecord;
+    const tree: RouterRecord[] = [];
+
+    data.forEach((item, index) => {
+      map[item.id] = index;
+      item.children = [];
+
+      Object.assign(item.meta, {
+        pid: item.pid,
+        id: item.id,
+        sort: item.sort,
       });
+
+      const component = searchModuleComponent(item.component, modules);
+      componentReplace(item, component);
     });
 
-    return prouter;
+    for (let i = 0; i < data.length; i += 1) {
+      node = data[i];
+      if (node.pid !== 0) {
+        data[map[node.pid]].children?.push(node);
+      } else {
+        tree.push(node);
+      }
+    }
+
+    return tree;
   }
 
-  return toTree(roorRouter, childRouter);
+  return buildTree(routers);
 }
 
 export type UseRouterState = {
