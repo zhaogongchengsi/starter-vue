@@ -1,6 +1,5 @@
-
 import { useLocalStorage } from "@vueuse/core";
-import { ISSUED_AT_KEY,EXPRESS_AT_KEY, TOKEN_KEY } from "@/utils/keys";
+import { EXPRESS_AT_KEY, ISSUED_AT_KEY, TOKEN_KEY } from "@/utils/keys";
 
 export function useToken() {
   const token = useLocalStorage(TOKEN_KEY, "");
@@ -20,10 +19,10 @@ export function useToken() {
   };
 
   return {
-	token,
-	issuedAt:issued_at,
-	expressAt: express_at,
-	setTokenInfo,
-	clearTokenInfo
-  }
+    token,
+    issuedAt: issued_at,
+    expressAt: express_at,
+    setTokenInfo,
+    clearTokenInfo,
+  };
 }

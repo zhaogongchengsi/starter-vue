@@ -13,7 +13,7 @@ import { tokenValid } from "@/utils/token";
 function useLogin() {
   const tokeninfo = useToken();
   const auths = useAuthorities();
-  const user = useLocalStorage<User | undefined>(USER_INFO_KEY, undefined);
+  const user = useLocalStorage<User | {}>(USER_INFO_KEY, {});
 
   const login = async (userinfo: LoginInfo): Promise<boolean> => {
     try {
@@ -47,13 +47,14 @@ function useLogin() {
   };
 
   const LoginOut = () => {
-    user.value = undefined;
+    user.value = {};
     tokeninfo.clearTokenInfo();
     auths.clearAuthorities();
   };
 
   return {
     token: tokeninfo.token,
+    user,
     logined: () => {
       return tokenValid();
     },
