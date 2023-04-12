@@ -19,4 +19,5 @@ export default {
   "router.title.abnormal": "Abnormal",
   "router.title.toolLibrary": "Tool Library",
   "router.title.fileSplitting": "file splitting",
+  "router.title.roles": "Role management",
 };

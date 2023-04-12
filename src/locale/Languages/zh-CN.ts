@@ -19,4 +19,5 @@ export default {
   "router.title.abnormal": "异常组件",
   "router.title.toolLibrary": "工具库",
   "router.title.fileSplitting": "文件切分",
+  "router.title.roles": "角色管理",
 };
