@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watch } from "vue";
+import { defineComponent, computed, ref, watch, onMounted } from "vue";
 import { IconCalendar } from "@arco-design/web-vue/es/icon";
 import { RouteRecordNormalized, RouteRecordRaw, useRouter } from "vue-router";
 import { MenuInfo, RouterMeTa } from "@/types/user";
@@ -26,6 +26,11 @@ export default defineComponent({
     watch(router.currentRoute, (newRouter) => {
       selectedKeys.value = [newRouter.path];
     });
+
+    onMounted(() => {
+      // 当页面刷新 时 需要重新激活高亮菜单
+      selectedKeys.value = [router.currentRoute.value.path];
+    })
 
     const menuTree = (routers: readonly RouteRecordRaw[]): MenuInfo[] => {
       const cloneRouters = routers?.map((router): MenuInfo | null => {

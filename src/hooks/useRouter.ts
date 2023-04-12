@@ -17,16 +17,21 @@ export function searchModuleComponent(
   router: RouterRecord,
   modules: ModulesMap,
 ): ImportModule | undefined {
-  if (typeof router === "function") {
-    return router;
-  }
   const component: string = router.component as string;
+
+  if (typeof component != "string") {
+    return component;
+  }
+
   const isExt = FILESUF_REG.test(component);
+  
   const componetName = (isExt ? component : component + ".vue").replace(
     PATH_REG,
     "",
   );
+
   let module = modules.get(componetName);
+
 
   if (!module) {
     if (isExt) {
@@ -56,7 +61,6 @@ export function modulesOrganize(modules: Modules) {
 }
 
 export function routerTravel(routers: RouterRecord[], modules: ModulesMap) {
- 
   function componentReplace(router: RouterRecord, module?: ImportModule) {
     if (!module) {
       const comp = router.component;
@@ -84,8 +88,7 @@ export function routerTravel(routers: RouterRecord[], modules: ModulesMap) {
         id: item.id,
         sort: item.sort,
       });
-
-      const component = searchModuleComponent(item.component, modules);
+      const component = searchModuleComponent(item, modules)
       componentReplace(item, component);
     });
 

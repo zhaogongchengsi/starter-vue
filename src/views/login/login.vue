@@ -118,7 +118,7 @@ const handleSubmit = async (data: any) => {
   const baseRouter = createDefaultRouter(r);
 
   router.addRoute(baseRouter as RouteRecordRaw);
-  
+
   router.push("/");
 
 };

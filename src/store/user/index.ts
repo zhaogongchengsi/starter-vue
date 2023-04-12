@@ -10,7 +10,6 @@ import { useAuthorities } from "./authoritie";
 import { USER_INFO_KEY } from "@/utils/keys";
 import { tokenValid } from "@/utils/token";
 
-
 function useLogin() {
   const tokeninfo = useToken();
   const auths = useAuthorities();
@@ -22,7 +21,7 @@ function useLogin() {
         ...userinfo,
         password: md5.hash(userinfo.password),
       });
-
+      
       if (code === State.Failed) {
         Message.error(message);
         return false;
@@ -56,8 +55,8 @@ function useLogin() {
   return {
     token: tokeninfo.token,
     logined: () => {
-		return tokenValid()
-	},
+      return tokenValid();
+    },
     login,
     LoginOut,
   };
