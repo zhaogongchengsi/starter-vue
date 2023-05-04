@@ -4,15 +4,14 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
   deploy:
-    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Deploy to server
         run: |
           mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
