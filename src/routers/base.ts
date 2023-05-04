@@ -48,9 +48,18 @@ export const DEFAULT_PAGE = {
   },
 } as RouteRecordRaw;
 
-export function createDefaultRouter(
-  children: RouterRecord[] = [],
-): RouteRecordRaw {
+export const LOGIN_PAGE_PRO = {
+  component: () => import("@/views/login/login.vue"),
+  path: "/login",
+  name: "login",
+  meta: {
+    title: "login",
+    auth: false,
+    isMenu: false,
+  },
+};
+
+export function createDefaultRouter(children: RouterRecord[] = []): RouteRecordRaw {
   return {
     path: "/",
     component: LayoutPage,

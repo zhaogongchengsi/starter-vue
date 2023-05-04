@@ -50,7 +50,7 @@ import { useUserStore } from "@/store";
 import { RouteRecordRaw, useRouter } from "vue-router";
 import { onMounted, reactive, ref } from "vue";
 import { useRouterAsync } from "@/hooks/useRouter";
-import { createDefaultRouter } from "@/routers/base";
+import { LOGIN_PAGE_PRO, NOT_FOUND_PAGE, createDefaultRouter } from "@/routers/base";
 import { useLocal } from "@/locale/useLocale";
 import { State } from "@/enums/code";
 import { Message } from "@arco-design/web-vue";
@@ -117,8 +117,10 @@ const handleSubmit = async (data: any) => {
 
   const baseRouter = createDefaultRouter(r);
 
+  // 替换掉初始路由，保证和刷新后的路由一致
+  router.addRoute(LOGIN_PAGE_PRO);
+  router.addRoute(NOT_FOUND_PAGE);
   router.addRoute(baseRouter as RouteRecordRaw);
-
   router.push("/");
 
 };

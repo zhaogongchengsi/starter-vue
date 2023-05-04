@@ -66,6 +66,7 @@ const userInfo = computed(() => {
 const outLogin = () => {
 	user.LoginOut();
 	router.push("/login");
+	// todo: 注销登陆后，将清除所有的路由
 };
 
 const handleClick = () => {
