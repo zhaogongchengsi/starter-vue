@@ -1,4 +1,4 @@
-# Install dependencies
+# Install dependencies 此脚本放在服务器中
 cd /xxx 
 
 pnpm install
