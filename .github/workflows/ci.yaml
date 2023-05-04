@@ -1,4 +1,3 @@
-
 name: CI
 
 on:
@@ -13,15 +12,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
-      - name: Setup SSH connection
-        uses: appleboy/ssh-action@master
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-      
-      - name: Push code to remote server
+          node-version: "16"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to server
         run: |
-          ssh-command "cd /path/to/remote/repository && git pull origin main"
+          mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.USER }}@${{ secrets.HOST }}:/${{ secrets.WORKDIR }}
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} "cd ${{ secrets.RUNDIR }} && sudo ./build_test.sh > /dev/null  2>&1 &"
+          echo "Run successfully"
