@@ -21,4 +21,3 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.USER }}@${{ secrets.HOST }}:/${{ secrets.WORKDIR }}
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} "cd ${{ secrets.RUNDIR }} && sudo ./build_test.sh > /dev/null  2>&1 &"
-          echo "Run successfully"
