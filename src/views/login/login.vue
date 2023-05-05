@@ -66,8 +66,8 @@ const captchaImg = reactive({
 });
 
 const form = reactive({
-  phone: "12312312312",
-  password: "123456",
+  phone: "",
+  password: "",
   remember: true,
   captcha: "",
 });

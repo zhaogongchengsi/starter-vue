@@ -14,7 +14,9 @@ export interface HttpResponse<T extends any> {
 export type HttpParams = Record<string, string | number>;
 
 const http = axios.create({
-  baseURL: import.meta.env.VITE_PROXY,
+  baseURL: import.meta.env.DEV
+    ? import.meta.env.VITE_PROXY
+    : [import.meta.env.VITE_TARGET, import.meta.env.VITE_PROXY].join(""),
   timeout: 5000,
 });
 
@@ -27,7 +29,7 @@ http.interceptors.request.use(
   function (error) {
     // 对请求错误做些什么
     return Promise.reject(error);
-  },
+  }
 );
 
 http.interceptors.response.use(
@@ -41,7 +43,7 @@ http.interceptors.response.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 export function Get<T>(url: string, param?: HttpParams): Promise<HttpResponse<T>> {
@@ -70,10 +72,7 @@ export function Get<T>(url: string, param?: HttpParams): Promise<HttpResponse<T>
   });
 }
 
-export function Post<T, D = any>(
-  url: string,
-  data: D,
-): Promise<HttpResponse<T>> {
+export function Post<T, D = any>(url: string, data: D): Promise<HttpResponse<T>> {
   return new Promise((resolve, reject) => {
     http
       .post<HttpResponse<T>>(url, data)

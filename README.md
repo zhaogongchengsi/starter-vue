@@ -9,3 +9,8 @@
 [pinia](https://pinia.vuejs.org/)
 [router](https://router.vuejs.org/zh/)
 [icon](https://tabler-icons.io/)
+
+### 初始账号密码
+
+账号: 12312312312
+密码:123456
