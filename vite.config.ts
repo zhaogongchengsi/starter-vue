@@ -55,6 +55,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       port: 3050,
+      host: "0.0.0.0",
       proxy: {
         [`^${proxyprefix}/.*`]: {
           target: proxytraget + proxyprefix,
