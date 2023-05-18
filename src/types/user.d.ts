@@ -1,9 +1,5 @@
 import { Component } from "vue";
-import type {
-  RawRouteComponent,
-  RouteLocationMatched,
-  RouteRecordRaw,
-} from "vue-router";
+import type { RawRouteComponent, RouteLocationMatched, RouteRecordRaw } from "vue-router";
 
 export interface LoginInfo {
   account: string;
@@ -27,7 +23,7 @@ export interface User {
   updateAt: string;
   username: string;
   uuid: string;
-  authorities: Authority[]
+  authorities: Authority[];
 }
 
 export interface Authority {
@@ -41,6 +37,7 @@ export interface Authority {
 
 type DataString = string;
 export interface Authorization {
+  id: any;
   issued_at: DataString;
   express_at: DataString;
   token: string;
@@ -54,7 +51,7 @@ export interface RouterMeTa {
   title: string;
 }
 
-type _Props = boolean | Record<string, any> | ((to: RouteLocationNormalized) => Record<string, any>)
+type _Props = boolean | Record<string, any> | ((to: RouteLocationNormalized) => Record<string, any>);
 
 export type RouterRecord = {
   component: string | RawRouteComponent;
@@ -83,3 +80,10 @@ interface MenuInfo {
 export interface AppRouteLocationMatched extends RouteLocationMatched {
   meta: RouterMeTa;
 }
+
+export type Page = {
+  // 当前页码
+  page: number;
+  // 一页多少条数据
+  pageSize: number;
+};
