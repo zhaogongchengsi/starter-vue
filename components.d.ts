@@ -28,6 +28,7 @@ declare module '@vue/runtime-core' {
     ASpin: typeof import('@arco-design/web-vue')['Spin']
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
     ATable: typeof import('@arco-design/web-vue')['Table']
+    ATableColumn: typeof import('@arco-design/web-vue')['TableColumn']
     ATrigger: typeof import('@arco-design/web-vue')['Trigger']
     ComponNotExist: typeof import('./src/components/ComponNotExist/index.vue')['default']
     CustomView: typeof import('./src/components/CustomView/index.vue')['default']

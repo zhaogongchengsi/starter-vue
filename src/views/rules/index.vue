@@ -1,7 +1,18 @@
 <template>
 	<div class="p-3 h-full">
 		<FullScroll v-slot="{ height }">
-			<a-table :loading="isLoading" :columns="columns" :data="data" :scroll="{ y: height }" />
+			<a-table :loading="isLoading" :data="data" :scroll="{ y: height }">
+				<template #columns>
+					<a-table-column title="ID" data-index="id"></a-table-column>
+					<a-table-column title="角色名" data-index="authorityName"></a-table-column>
+					<a-table-column title="创建时间" data-index="createAt">
+						<template #cell="{ record }">
+							{{ fromat(record.createAt) }}
+						</template>
+					</a-table-column>
+
+				</template>
+			</a-table>
 		</FullScroll>
 	</div>
 </template>
@@ -10,19 +21,7 @@ import { ref, onMounted } from 'vue';
 import FullScroll from '@/components/FullScroll/index.vue'
 import { authoritiesTree, getAuthorities } from '@/api/authorities'
 import { Authority } from '@/types/user';
-
-const columns = [{
-	title: 'ID',
-	dataIndex: 'id',
-},
-{
-	title: '角色名',
-	dataIndex: 'authorityName',
-},
-{
-	title: '创建时间',
-	dataIndex: 'createAt',
-}]
+import day from '@/utils/day'
 
 const isLoading = ref(false)
 const data = ref<Authority[]>([]);
@@ -38,6 +37,10 @@ const getData = async () => {
 onMounted(() => {
 	getData()
 })
+
+const fromat = (time: string) => {
+	return day(time).format("DD-MM-YYYY")
+}
 
 </script>
 <style lang='scss'></style>
